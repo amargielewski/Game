@@ -2,6 +2,9 @@ import { GAME_CONFIG } from '../config/GameConfig';
 import { gameEvents } from '../game/events';
 import type { SettingsStore } from '../storage/SettingsStore';
 
+const EXPONENTIAL_RAMP_FLOOR = 0.0001;
+const MILLISECONDS_PER_SECOND = 1000;
+
 interface Tone {
   readonly frequency: number;
   readonly durationSeconds: number;
@@ -45,14 +48,12 @@ export class Sfx {
   }
 
   private playSequence(frequencies: readonly number[], stepSeconds: number): void {
-    const millisecondsPerSecond = 1000;
-
     frequencies.forEach((frequency, index) => {
       window.setTimeout(
         () => {
           this.playTone({ ...GAME_CONFIG.audio.sequenceTone, frequency });
         },
-        index * stepSeconds * millisecondsPerSecond,
+        index * stepSeconds * MILLISECONDS_PER_SECOND,
       );
     });
   }
@@ -68,13 +69,12 @@ export class Sfx {
     const amplifier = context.createGain();
     const startTime = context.currentTime;
     const endTime = startTime + tone.durationSeconds;
-    const silence = 0.0001;
 
     oscillator.type = tone.type;
     oscillator.frequency.setValueAtTime(tone.frequency, startTime);
 
     amplifier.gain.setValueAtTime(tone.gain * this.settings.volume, startTime);
-    amplifier.gain.exponentialRampToValueAtTime(silence, endTime);
+    amplifier.gain.exponentialRampToValueAtTime(EXPONENTIAL_RAMP_FLOOR, endTime);
 
     oscillator.connect(amplifier).connect(context.destination);
     oscillator.start(startTime);

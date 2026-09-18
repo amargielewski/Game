@@ -15,12 +15,20 @@ export class Jump {
     return this.currentHeight;
   }
 
+  private get gravity(): number {
+    return (2 * this.apexHeight) / (this.riseSeconds * this.riseSeconds);
+  }
+
+  private get launchSpeed(): number {
+    return (2 * this.apexHeight) / this.riseSeconds;
+  }
+
   public start(): void {
     if (this.isAirborne) {
       return;
     }
 
-    this.verticalSpeed = (2 * this.apexHeight) / this.riseSeconds;
+    this.verticalSpeed = this.launchSpeed;
   }
 
   public update(deltaSeconds: number): void {
@@ -28,7 +36,7 @@ export class Jump {
       return;
     }
 
-    const gravity = (2 * this.apexHeight) / (this.riseSeconds * this.riseSeconds);
+    const { gravity } = this;
 
     this.currentHeight +=
       this.verticalSpeed * deltaSeconds - 0.5 * gravity * deltaSeconds * deltaSeconds;

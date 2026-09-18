@@ -55,7 +55,7 @@ export const GAME_CONFIG = {
     maxSpin: 1.6,
   },
   bonus: {
-    kind: 'honeycomb' as ItemKind,
+    kind: 'honeycomb' satisfies ItemKind,
     laneY: groundY - worldUnit * BONUS_LANE_RATIO,
     intervalSeconds: 13,
     crossingSeconds: 3.6,
