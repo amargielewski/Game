@@ -102,6 +102,7 @@ export class AppFlow {
     });
 
     gameEvents.on('gameOver', (points) => {
+      this.input.setGameplayActive(false);
       this.gameOverScreen.present(points);
       this.hudControls.hide();
       this.showOnly(this.gameOverScreen.overlay);
@@ -145,6 +146,7 @@ export class AppFlow {
 
     this.playScene = scene;
     this.paused = false;
+    this.input.setGameplayActive(true);
     this.gameLayer.addChild(scene);
     this.hud.visible = true;
     this.showOnly(null);
@@ -163,6 +165,7 @@ export class AppFlow {
     }
 
     this.paused = !this.paused;
+    this.input.setGameplayActive(!this.paused);
     this.showOnly(this.paused ? this.pauseOverlay : null);
 
     if (this.paused) {
@@ -189,6 +192,7 @@ export class AppFlow {
   }
 
   private disposePlayScene(): void {
+    this.input.setGameplayActive(false);
     this.playScene?.destroy({ children: true });
     this.playScene = null;
     this.paused = false;

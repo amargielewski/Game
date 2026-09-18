@@ -3,8 +3,10 @@ import { GAME_CONFIG } from '../config/GameConfig';
 export class InputManager {
   private readonly pressedKeys = new Set<string>();
   private pointerAxis = 0;
+  private movePointerId: number | null = null;
   private isJumpRequested = false;
   private isPauseRequested = false;
+  private isGameplayActive = false;
 
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.target instanceof HTMLInputElement) {
@@ -13,6 +15,10 @@ export class InputManager {
 
     if (this.matches(GAME_CONFIG.input.pauseKeys, event.code)) {
       this.isPauseRequested = true;
+    }
+
+    if (!this.isGameplayActive) {
+      return;
     }
 
     if (this.matches(GAME_CONFIG.input.jumpKeys, event.code)) {
@@ -34,22 +40,29 @@ export class InputManager {
       return;
     }
 
+    this.movePointerId = event.pointerId;
     this.pointerAxis = this.axisForPointer(event);
   };
 
   private readonly handlePointerMove = (event: PointerEvent): void => {
-    if (this.pointerAxis !== 0) {
-      this.pointerAxis = this.axisForPointer(event);
+    if (event.pointerId !== this.movePointerId) {
+      return;
     }
+
+    this.pointerAxis = this.axisForPointer(event);
   };
 
-  private readonly handlePointerRelease = (): void => {
-    this.pointerAxis = 0;
+  private readonly handlePointerRelease = (event: PointerEvent): void => {
+    if (event.pointerId !== this.movePointerId) {
+      return;
+    }
+
+    this.releaseMovePointer();
   };
 
   private readonly handleWindowBlur = (): void => {
     this.pressedKeys.clear();
-    this.pointerAxis = 0;
+    this.releaseMovePointer();
   };
 
   public start(canvas: HTMLCanvasElement): void {
@@ -63,9 +76,13 @@ export class InputManager {
     canvas.addEventListener('pointerleave', this.handlePointerRelease);
   }
 
+  public setGameplayActive(isActive: boolean): void {
+    this.isGameplayActive = isActive;
+  }
+
   public reset(): void {
     this.pressedKeys.clear();
-    this.pointerAxis = 0;
+    this.releaseMovePointer();
     this.isJumpRequested = false;
     this.isPauseRequested = false;
   }
@@ -88,6 +105,11 @@ export class InputManager {
     this.isPauseRequested = false;
 
     return isRequested;
+  }
+
+  private releaseMovePointer(): void {
+    this.movePointerId = null;
+    this.pointerAxis = 0;
   }
 
   private axisForPointer(event: PointerEvent): number {
