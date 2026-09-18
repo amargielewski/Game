@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Feast Knight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div id="ui">
+        <div id="hud-controls" hidden>
+          <button type="button" data-action="pause" data-text="pause"></button>
+        </div>
+
+        <section id="screen-loading" class="screen">
+          <div class="panel">
+            <h2 data-text="loading"></h2>
+            <div class="progress"><span class="progress-fill" data-field="fill"></span></div>
+          </div>
+        </section>
+
+        <section id="screen-menu" class="screen" hidden>
+          <div class="panel">
+            <h1 class="title">Feast Knight</h1>
+            <p class="subtitle" data-text="menuHint"></p>
+            <div class="actions">
+              <button type="button" data-action="play" data-text="play"></button>
+              <button type="button" data-action="ranking" data-text="ranking"></button>
+              <button type="button" data-action="guide" data-text="guide"></button>
+              <button type="button" data-action="settings" data-text="settings"></button>
+            </div>
+            <p class="hint" data-text="controls"></p>
+          </div>
+        </section>
+
+        <section id="screen-guide" class="screen" hidden>
+          <div class="panel">
+            <h2 data-text="guide"></h2>
+            <p class="hint" data-text="guideGood"></p>
+            <ul class="food-list" data-field="good"></ul>
+            <p class="hint" data-text="guideBad"></p>
+            <ul class="food-list" data-field="bad"></ul>
+            <p class="hint" data-text="guideBonus"></p>
+            <p class="hint" data-text="guideMiss"></p>
+            <div class="actions">
+              <button type="button" data-action="back" data-text="back"></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-settings" class="screen" hidden>
+          <div class="panel">
+            <h2 data-text="settings"></h2>
+            <label class="field">
+              <span data-text="language"></span>
+              <select data-field="locale">
+                <option value="pl">Polski</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+            <label class="field">
+              <span data-text="sound"></span>
+              <input type="checkbox" data-field="sound" />
+            </label>
+            <label class="field">
+              <span data-text="volume"></span>
+              <input type="range" data-field="volume" min="0" max="100" step="5" />
+            </label>
+            <div class="actions">
+              <button type="button" data-action="back" data-text="back"></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-ranking" class="screen" hidden>
+          <div class="panel">
+            <h2 data-text="ranking"></h2>
+            <ol class="ranking" data-field="list"></ol>
+            <p class="hint" data-field="empty" data-text="noScores"></p>
+            <div class="actions">
+              <button type="button" data-action="clear" data-text="clearRanking"></button>
+              <button type="button" data-action="back" data-text="back"></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-pause" class="screen" hidden>
+          <div class="panel">
+            <h2 data-text="pause"></h2>
+            <div class="actions">
+              <button type="button" data-action="resume" data-text="resume"></button>
+              <button type="button" data-action="menu" data-text="backToMenu"></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-gameover" class="screen" hidden>
+          <div class="panel">
+            <h2 data-text="gameOver"></h2>
+            <p class="score">
+              <span data-text="score"></span>
+              <strong data-field="score"></strong>
+            </p>
+            <form class="record" data-field="record" hidden>
+              <label class="field">
+                <span data-text="newRecord"></span>
+                <input type="text" data-field="name" maxlength="12" autocomplete="off" />
+              </label>
+              <button type="submit" data-text="save"></button>
+            </form>
+            <div class="actions">
+              <button type="button" data-action="restart" data-text="restart"></button>
+              <button type="button" data-action="menu" data-text="backToMenu"></button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <template id="food-row">
+      <li class="food-row">
+        <img data-field="icon" alt="" width="32" height="32" />
+        <span data-field="name"></span>
+        <strong data-field="points"></strong>
+      </li>
+    </template>
+
+    <template id="ranking-row">
+      <li class="ranking-row">
+        <span data-field="position"></span>
+        <span data-field="name"></span>
+        <strong data-field="points"></strong>
+      </li>
+    </template>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

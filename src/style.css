@@ -1,0 +1,263 @@
+:root {
+  --ink: #0b0b12;
+  --panel: #191926;
+  --line: #f4f4f8;
+  --accent: #ffd24a;
+  --accent-hover: #ffe27a;
+  --text: #f4f4f8;
+  --muted: #9a9ab8;
+  --pixel: 4px;
+  --edge-color: var(--line);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--text);
+  font-family: ui-monospace, 'SF Mono', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#app canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+#ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#hud-controls {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  pointer-events: auto;
+}
+
+#hud-controls button {
+  padding: 8px 16px;
+  font-size: 0.6rem;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  pointer-events: auto;
+  background: rgba(11, 11, 18, 0.86);
+}
+
+.panel,
+button,
+input[type='text'],
+select,
+.progress {
+  box-shadow:
+    0 calc(var(--pixel) * -1) 0 0 var(--edge-color),
+    0 var(--pixel) 0 0 var(--edge-color),
+    calc(var(--pixel) * -1) 0 0 0 var(--edge-color),
+    var(--pixel) 0 0 0 var(--edge-color);
+}
+
+.panel {
+  width: min(440px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 24px;
+  background: var(--panel);
+  text-align: center;
+}
+
+h1,
+h2,
+button,
+.title,
+.score strong,
+.ranking-row {
+  font-family: 'Press Start 2P', ui-monospace, monospace;
+}
+
+.title {
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  line-height: 1.4;
+  color: var(--accent);
+  text-shadow: var(--pixel) var(--pixel) 0 var(--ink);
+}
+
+h2 {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.subtitle {
+  color: var(--muted);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+button {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  padding: 14px 16px;
+  border: none;
+  background: var(--accent);
+  color: var(--ink);
+  cursor: pointer;
+  --edge-color: var(--ink);
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+button:active {
+  transform: translate(var(--pixel), var(--pixel));
+}
+
+:focus-visible {
+  outline: var(--pixel) solid #7fd4ff;
+  outline-offset: var(--pixel);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  text-align: left;
+}
+
+input[type='text'],
+select {
+  font: inherit;
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border: none;
+  background: var(--ink);
+  color: var(--text);
+}
+
+input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--accent);
+}
+
+input[type='range'] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+}
+
+.progress {
+  height: 24px;
+  padding: var(--pixel);
+  background: var(--ink);
+}
+
+.progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+}
+
+.score {
+  font-size: 1rem;
+}
+
+.score strong {
+  color: var(--accent);
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.food-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--pixel);
+}
+
+.food-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 0.6rem;
+  background: var(--ink);
+  text-align: left;
+}
+
+.food-row img {
+  image-rendering: pixelated;
+}
+
+.food-row strong {
+  color: var(--accent);
+}
+
+.ranking {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pixel);
+  max-height: 44vh;
+  overflow-y: auto;
+}
+
+.ranking-row {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  font-size: 0.7rem;
+  background: var(--ink);
+  text-align: left;
+}
+
+.ranking-row strong {
+  color: var(--accent);
+}
