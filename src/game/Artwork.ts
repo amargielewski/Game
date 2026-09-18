@@ -6,7 +6,7 @@ import {
   KNIGHT_RUN_RIGHT_URLS,
 } from '../config/assets';
 import { GAME_CONFIG } from '../config/GameConfig';
-import type { ItemKind } from '../config/items';
+import { mapItemKinds, type ItemKind } from '../config/items';
 
 export class Artwork {
   public readonly knightIdle: readonly Texture[];
@@ -24,24 +24,13 @@ export class Artwork {
     this.knightIdle = KNIGHT_IDLE_URLS.map((url) => this.pick(loadedTextures, url));
     this.knightRunRight = KNIGHT_RUN_RIGHT_URLS.map((url) => this.pick(loadedTextures, url));
     this.knightRunLeft = KNIGHT_RUN_LEFT_URLS.map((url) => this.pick(loadedTextures, url));
-    this.foodTextures = this.mapFoodTextures(loadedTextures);
+    this.foodTextures = mapItemKinds((kind) => this.pick(loadedTextures, FOOD_URLS[kind]));
     this.fullHeartTexture = this.createHeart(GAME_CONFIG.hearts.fullColor);
     this.emptyHeartTexture = this.createHeart(GAME_CONFIG.hearts.emptyColor);
     this.sparkTexture = this.createSquare(
       GAME_CONFIG.particles.sparkSize,
       GAME_CONFIG.particles.baseColor,
     );
-  }
-
-  private mapFoodTextures(
-    loadedTextures: Readonly<Record<string, Texture>>,
-  ): Readonly<Record<ItemKind, Texture>> {
-    const entries = Object.entries(FOOD_URLS).map(([kind, url]) => [
-      kind,
-      this.pick(loadedTextures, url),
-    ]);
-
-    return Object.fromEntries(entries) as Record<ItemKind, Texture>;
   }
 
   private createHeart(color: number): Texture {

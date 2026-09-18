@@ -1,16 +1,14 @@
-import { ITEM_KINDS, type ItemKind } from './items';
+import { mapItemKinds, type ItemKind } from './items';
 
-type AssetIndex = Readonly<Record<string, string>>;
-
-const KNIGHT_FILES = import.meta.glob('../assets/knight/*.png', {
+const KNIGHT_FILES = import.meta.glob<string>('../assets/knight/*.png', {
   eager: true,
   import: 'default',
-}) as AssetIndex;
+});
 
-const FOOD_FILES = import.meta.glob('../assets/food/*.png', {
+const FOOD_FILES = import.meta.glob<string>('../assets/food/*.png', {
   eager: true,
   import: 'default',
-}) as AssetIndex;
+});
 
 function baseName(path: string): string {
   return path.slice(path.lastIndexOf('/') + 1).replace(/\.png$/, '');
@@ -43,9 +41,7 @@ export const KNIGHT_IDLE_URLS = knightFrames('idle');
 export const KNIGHT_RUN_RIGHT_URLS = knightFrames('run-right');
 export const KNIGHT_RUN_LEFT_URLS = knightFrames('run-left');
 
-export const FOOD_URLS: Readonly<Record<ItemKind, string>> = Object.fromEntries(
-  ITEM_KINDS.map((kind) => [kind, foodUrl(kind)]),
-) as Record<ItemKind, string>;
+export const FOOD_URLS = mapItemKinds(foodUrl);
 
 export const ALL_ASSET_URLS: readonly string[] = [
   ...KNIGHT_IDLE_URLS,

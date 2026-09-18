@@ -1,16 +1,19 @@
-export type ItemKind =
-  | 'apple'
-  | 'bread'
-  | 'cherry'
-  | 'cheese'
-  | 'strawberry'
-  | 'cookie'
-  | 'tart'
-  | 'pineapple'
-  | 'waffles'
-  | 'honeycomb'
-  | 'grub'
-  | 'bug';
+export const ITEM_KINDS = [
+  'apple',
+  'bread',
+  'cherry',
+  'cheese',
+  'strawberry',
+  'cookie',
+  'tart',
+  'pineapple',
+  'waffles',
+  'honeycomb',
+  'grub',
+  'bug',
+] as const;
+
+export type ItemKind = (typeof ITEM_KINDS)[number];
 
 export interface ItemDefinition {
   readonly points: number;
@@ -36,4 +39,11 @@ export function isHazard(definition: ItemDefinition): boolean {
   return definition.points < 0;
 }
 
-export const ITEM_KINDS = Object.keys(ITEM_DEFINITIONS) as readonly ItemKind[];
+export function mapItemKinds<TValue>(
+  toValue: (kind: ItemKind) => TValue,
+): Readonly<Record<ItemKind, TValue>> {
+  return Object.fromEntries(ITEM_KINDS.map((kind) => [kind, toValue(kind)])) as Record<
+    ItemKind,
+    TValue
+  >;
+}
