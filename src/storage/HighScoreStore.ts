@@ -1,20 +1,11 @@
+import * as z from 'zod/mini';
 import { GAME_CONFIG } from '../config/GameConfig';
 import { readStoredValue, writeStoredValue } from './safeLocalStorage';
 
-export interface HighScoreEntry {
-  readonly name: string;
-  readonly points: number;
-}
+const HIGH_SCORE_ENTRY_SCHEMA = z.object({ name: z.string(), points: z.number() });
+const STORED_LIST_SCHEMA = z.array(z.unknown());
 
-function isValidEntry(candidate: unknown): candidate is HighScoreEntry {
-  if (typeof candidate !== 'object' || candidate === null) {
-    return false;
-  }
-
-  const entry = candidate as Partial<HighScoreEntry>;
-
-  return typeof entry.name === 'string' && Number.isFinite(entry.points);
-}
+export type HighScoreEntry = Readonly<z.infer<typeof HIGH_SCORE_ENTRY_SCHEMA>>;
 
 export class HighScoreStore {
   public list(): readonly HighScoreEntry[] {
@@ -25,7 +16,7 @@ export class HighScoreStore {
     }
 
     try {
-      return this.parseEntries(JSON.parse(raw) as unknown);
+      return this.parseEntries(JSON.parse(raw));
     } catch {
       return [];
     }
@@ -63,12 +54,18 @@ export class HighScoreStore {
   }
 
   private parseEntries(value: unknown): readonly HighScoreEntry[] {
-    if (!Array.isArray(value)) {
+    const storedList = STORED_LIST_SCHEMA.safeParse(value);
+
+    if (!storedList.success) {
       return [];
     }
 
-    return value
-      .filter(isValidEntry)
+    return storedList.data
+      .flatMap((candidate) => {
+        const entry = HIGH_SCORE_ENTRY_SCHEMA.safeParse(candidate);
+
+        return entry.success ? [entry.data] : [];
+      })
       .sort((first, second) => second.points - first.points)
       .slice(0, GAME_CONFIG.scoring.maxRankingEntries);
   }

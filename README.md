@@ -68,7 +68,7 @@ intentions:
 ```
 config/        ──►  (nothing)          the single source of values
 game/rules/    ──►  (nothing)          plain TypeScript, ZERO pixi, ZERO config
-storage/       ──►  config
+storage/       ──►  zod, config        the only place untrusted input is parsed
 core/          ──►  pixi.js, config    input and scaling, knows nothing about the game
 game/          ──►  core, rules, config
 presentation/  ──►  events, DOM        listens only, never decides
