@@ -3,7 +3,7 @@ import { Entity } from './Entity';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import { isHazard, type ItemDefinition } from '../../config/items';
 
-export class FallingItem extends Entity {
+export class Item extends Entity {
   private readonly spin = (Math.random() - 0.5) * GAME_CONFIG.items.maxSpin;
 
   constructor(

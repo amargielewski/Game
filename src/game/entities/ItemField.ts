@@ -1,5 +1,5 @@
 import { Container } from 'pixi.js';
-import { FallingItem } from './FallingItem';
+import { Item } from './Item';
 import type { Player } from './Player';
 import type { Artwork } from '../Artwork';
 import type { CaughtItem } from '../events';
@@ -11,7 +11,7 @@ import { intersects } from '../rules/intersects';
 import { SpawnTimer } from '../rules/SpawnTimer';
 
 export class ItemField extends Container {
-  private readonly items: FallingItem[] = [];
+  private readonly items: Item[] = [];
   private readonly spawnTimer: SpawnTimer;
   private readonly bonusTimer = new SpawnTimer(GAME_CONFIG.bonus.intervalSeconds);
   private level: LevelDefinition;
@@ -102,16 +102,11 @@ export class ItemField extends Container {
     this.addItem(item);
   }
 
-  private createItem(kind: ItemKind, velocityX: number, velocityY: number): FallingItem {
-    return new FallingItem(
-      ITEM_DEFINITIONS[kind],
-      this.artwork.foodTextures[kind],
-      velocityX,
-      velocityY,
-    );
+  private createItem(kind: ItemKind, velocityX: number, velocityY: number): Item {
+    return new Item(ITEM_DEFINITIONS[kind], this.artwork.foodTextures[kind], velocityX, velocityY);
   }
 
-  private addItem(item: FallingItem): void {
+  private addItem(item: Item): void {
     this.items.push(item);
     this.addChild(item);
   }
@@ -133,7 +128,7 @@ export class ItemField extends Container {
     return GAME_CONFIG.items.spawnMargin + Math.random() * span;
   }
 
-  private removeItem(item: FallingItem): void {
+  private removeItem(item: Item): void {
     const index = this.items.indexOf(item);
 
     if (index >= 0) {
