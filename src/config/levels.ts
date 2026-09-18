@@ -1,34 +1,41 @@
-import type { LevelDefinition } from '../game/rules/LevelProgression';
+import type { ItemKind } from './items';
+
+export interface LevelDefinition {
+  readonly scoreToAdvance: number;
+  readonly spawnIntervalSeconds: number;
+  readonly fallSeconds: number;
+  readonly spawnPool: readonly ItemKind[];
+}
 
 export const LEVELS: readonly LevelDefinition[] = [
   {
     scoreToAdvance: 12,
     spawnIntervalSeconds: 1.3,
     fallSeconds: 4.2,
-    itemKinds: ['apple', 'bread'],
+    spawnPool: ['apple', 'bread'],
   },
   {
     scoreToAdvance: 30,
     spawnIntervalSeconds: 1.1,
     fallSeconds: 3.7,
-    itemKinds: ['apple', 'bread', 'cherry', 'cheese'],
+    spawnPool: ['apple', 'bread', 'cherry', 'cheese'],
   },
   {
     scoreToAdvance: 60,
     spawnIntervalSeconds: 0.95,
     fallSeconds: 3.2,
-    itemKinds: ['cherry', 'cheese', 'strawberry', 'cookie', 'bug'],
+    spawnPool: ['cherry', 'cheese', 'strawberry', 'cookie', 'bug'],
   },
   {
     scoreToAdvance: 100,
     spawnIntervalSeconds: 0.8,
     fallSeconds: 2.8,
-    itemKinds: ['strawberry', 'cookie', 'tart', 'pineapple', 'bug', 'grub'],
+    spawnPool: ['strawberry', 'cookie', 'tart', 'pineapple', 'grub', 'bug'],
   },
   {
     scoreToAdvance: Number.POSITIVE_INFINITY,
     spawnIntervalSeconds: 0.65,
     fallSeconds: 2.4,
-    itemKinds: ['cookie', 'tart', 'pineapple', 'waffles', 'bug', 'grub', 'bug'],
+    spawnPool: ['cookie', 'tart', 'pineapple', 'waffles', 'grub', 'bug', 'bug'],
   },
 ];

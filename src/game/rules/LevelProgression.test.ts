@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { LevelProgression, type LevelDefinition } from './LevelProgression';
+import { LevelProgression } from './LevelProgression';
 
-const levels: readonly LevelDefinition[] = [
-  { scoreToAdvance: 10, spawnIntervalSeconds: 1, fallSeconds: 4, itemKinds: ['apple'] },
-  { scoreToAdvance: 20, spawnIntervalSeconds: 0.8, fallSeconds: 3, itemKinds: ['cherry'] },
+const levels = [
+  { scoreToAdvance: 10, fallSeconds: 4 },
+  { scoreToAdvance: 20, fallSeconds: 3 },
 ];
 
 describe('LevelProgression', () => {

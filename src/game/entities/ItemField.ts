@@ -4,8 +4,8 @@ import type { Player } from './Player';
 import type { Artwork } from '../Artwork';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import { ITEM_DEFINITIONS, type ItemKind } from '../../config/items';
+import type { LevelDefinition } from '../../config/levels';
 import { intersects } from '../rules/intersects';
-import type { LevelDefinition } from '../rules/LevelProgression';
 import { SpawnTimer } from '../rules/SpawnTimer';
 
 export interface CaughtItem {
@@ -122,11 +122,11 @@ export class ItemField extends Container {
   }
 
   private pickItemKind(): ItemKind {
-    const kinds = this.level.itemKinds;
-    const kind = kinds[Math.floor(Math.random() * kinds.length)];
+    const pool = this.level.spawnPool;
+    const kind = pool[Math.floor(Math.random() * pool.length)];
 
     if (!kind) {
-      throw new Error('Level defines no item kinds');
+      throw new Error('Level defines no spawn pool');
     }
 
     return kind;
