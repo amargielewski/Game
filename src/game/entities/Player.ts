@@ -5,6 +5,8 @@ import { GAME_CONFIG } from '../../config/GameConfig';
 import type { Bounds } from '../rules/intersects';
 import { Jump } from '../rules/Jump';
 
+const PIXI_TICKS_PER_SECOND = 60;
+
 export interface KnightAnimations {
   readonly idle: readonly Texture[];
   readonly runRight: readonly Texture[];
@@ -28,6 +30,7 @@ export class Player extends Entity {
 
     this.currentFrames = animations.idle;
     this.sprite = new AnimatedSprite([...animations.idle]);
+    this.sprite.autoUpdate = false;
     this.sprite.anchor.set(0.5, 1);
     this.sprite.scale.set(GAME_CONFIG.player.scale);
     this.sprite.animationSpeed = GAME_CONFIG.player.idleAnimationSpeed;
@@ -64,6 +67,7 @@ export class Player extends Entity {
     this.y = GAME_CONFIG.arena.groundY - this.jump.height;
 
     this.updatePose(direction);
+    this.sprite.update(deltaSeconds * PIXI_TICKS_PER_SECOND);
   }
 
   private get currentSpeed(): number {

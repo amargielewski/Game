@@ -1,5 +1,5 @@
 import './style.css';
-import { Game } from './core/Game';
+import { Game } from './app/Game';
 
 async function bootstrap(): Promise<void> {
   await document.fonts.ready;

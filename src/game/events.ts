@@ -1,10 +1,17 @@
 import { utils } from 'pixi.js';
 
+export interface CaughtItem {
+  readonly points: number;
+  readonly color: number;
+  readonly x: number;
+  readonly y: number;
+}
+
 type GameEvents = {
   scoreChanged: [points: number];
   livesChanged: [lives: number];
   levelChanged: [levelNumber: number];
-  itemCaught: [x: number, y: number, color: number, points: number];
+  itemCaught: [item: CaughtItem];
   itemMissed: [];
   gameOver: [points: number];
 };

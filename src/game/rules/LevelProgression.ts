@@ -1,22 +1,17 @@
-import type { ItemKind } from '../../config/items';
-
-export interface LevelDefinition {
+export interface AdvanceableLevel {
   readonly scoreToAdvance: number;
-  readonly spawnIntervalSeconds: number;
-  readonly fallSeconds: number;
-  readonly itemKinds: readonly ItemKind[];
 }
 
-export class LevelProgression {
+export class LevelProgression<TLevel extends AdvanceableLevel> {
   private currentIndex = 0;
 
-  constructor(private readonly levels: readonly LevelDefinition[]) {
+  constructor(private readonly levels: readonly TLevel[]) {
     if (levels.length === 0) {
       throw new Error('LevelProgression requires at least one level');
     }
   }
 
-  public get current(): LevelDefinition {
+  public get current(): TLevel {
     const level = this.levels[this.currentIndex];
 
     if (!level) {

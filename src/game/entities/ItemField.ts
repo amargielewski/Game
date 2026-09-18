@@ -1,22 +1,17 @@
 import { Container } from 'pixi.js';
-import { FallingItem } from './FallingItem';
+import { Item } from './Item';
 import type { Player } from './Player';
 import type { Artwork } from '../Artwork';
+import type { CaughtItem } from '../events';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import { ITEM_DEFINITIONS, type ItemKind } from '../../config/items';
+import type { LevelDefinition } from '../../config/levels';
+import { costsALife, hasLeftTheArena } from '../rules/departure';
 import { intersects } from '../rules/intersects';
-import type { LevelDefinition } from '../rules/LevelProgression';
 import { SpawnTimer } from '../rules/SpawnTimer';
 
-export interface CaughtItem {
-  readonly points: number;
-  readonly color: number;
-  readonly x: number;
-  readonly y: number;
-}
-
 export class ItemField extends Container {
-  private readonly items: FallingItem[] = [];
+  private readonly items: Item[] = [];
   private readonly spawnTimer: SpawnTimer;
   private readonly bonusTimer = new SpawnTimer(GAME_CONFIG.bonus.intervalSeconds);
   private level: LevelDefinition;
@@ -73,8 +68,8 @@ export class ItemField extends Container {
   }
 
   public takeMissedCount(): number {
-    const gone = this.items.filter((item) => item.hasFallenBelowScreen || item.hasDriftedOffScreen);
-    const missedCount = gone.filter((item) => item.hasFallenBelowScreen && !item.isHazard).length;
+    const gone = this.items.filter(hasLeftTheArena);
+    const missedCount = gone.filter(costsALife).length;
 
     for (const item of gone) {
       this.removeItem(item);
@@ -107,26 +102,21 @@ export class ItemField extends Container {
     this.addItem(item);
   }
 
-  private createItem(kind: ItemKind, velocityX: number, velocityY: number): FallingItem {
-    return new FallingItem(
-      ITEM_DEFINITIONS[kind],
-      this.artwork.foodTextures[kind],
-      velocityX,
-      velocityY,
-    );
+  private createItem(kind: ItemKind, velocityX: number, velocityY: number): Item {
+    return new Item(ITEM_DEFINITIONS[kind], this.artwork.foodTextures[kind], velocityX, velocityY);
   }
 
-  private addItem(item: FallingItem): void {
+  private addItem(item: Item): void {
     this.items.push(item);
     this.addChild(item);
   }
 
   private pickItemKind(): ItemKind {
-    const kinds = this.level.itemKinds;
-    const kind = kinds[Math.floor(Math.random() * kinds.length)];
+    const pool = this.level.spawnPool;
+    const kind = pool[Math.floor(Math.random() * pool.length)];
 
     if (!kind) {
-      throw new Error('Level defines no item kinds');
+      throw new Error('Level defines no spawn pool');
     }
 
     return kind;
@@ -138,7 +128,7 @@ export class ItemField extends Container {
     return GAME_CONFIG.items.spawnMargin + Math.random() * span;
   }
 
-  private removeItem(item: FallingItem): void {
+  private removeItem(item: Item): void {
     const index = this.items.indexOf(item);
 
     if (index >= 0) {

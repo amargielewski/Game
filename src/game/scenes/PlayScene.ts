@@ -63,7 +63,7 @@ export class PlayScene extends Container {
 
     for (const item of caught) {
       this.scoreBoard.addPoints(item.points);
-      gameEvents.emit('itemCaught', item.x, item.y, item.color, item.points);
+      gameEvents.emit('itemCaught', item);
     }
 
     gameEvents.emit('scoreChanged', this.scoreBoard.points);
