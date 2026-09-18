@@ -125,8 +125,8 @@ so new artwork needs no import — only a file name matching its kind (`Cheese.p
 - Character: [4 Directional Character](https://lionheart963.itch.io/4-directional-character) —
   lionheart963. The `idle` and `run left/right` frames (84×84) are used, in `src/assets/knight/`.
 - Food: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) — Henry Software
-  (artwork: benmhenry@gmail.com). Twelve 16×16 sprites, in `src/assets/food/`. The apple,
-  scaled up four times with nearest-neighbour, doubles as the favicon.
+  (artwork: benmhenry@gmail.com). Twelve 16×16 sprites, in `src/assets/food/`. The apple
+  also becomes `public/favicon.ico`, scaled with nearest-neighbour to 16, 32 and 64 px.
 - Font: Press Start 2P (Google Fonts, SIL OFL), falling back to the system monospace.
 
 The background, clouds, hearts and particles are drawn procedurally in code — they do not
