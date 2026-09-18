@@ -1,6 +1,6 @@
 import { Container } from 'pixi.js';
 import { AppFlow } from './AppFlow';
-import type { Artwork } from './Artwork';
+import type { Artwork } from '../game/Artwork';
 import { GAME_CONFIG } from '../config/GameConfig';
 import type { InputManager } from '../core/InputManager';
 import { Background } from '../presentation/Background';

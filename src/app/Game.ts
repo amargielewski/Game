@@ -1,8 +1,8 @@
 import { Application, Assets, BaseTexture, Container, SCALE_MODES, type Texture } from 'pixi.js';
-import { Viewport } from './Viewport';
-import { InputManager } from './InputManager';
+import { Viewport } from '../core/Viewport';
+import { InputManager } from '../core/InputManager';
 import { Artwork } from '../game/Artwork';
-import { World } from '../game/World';
+import { World } from './World';
 import { ALL_ASSET_URLS } from '../config/assets';
 import { GAME_CONFIG } from '../config/GameConfig';
 import { LoadingScreen } from '../presentation/screens/LoadingScreen';
