@@ -13,7 +13,7 @@ export class Sfx {
   private audioContext: AudioContext | null = null;
 
   constructor(private readonly settings: SettingsStore) {
-    gameEvents.on('itemCaught', (_x, _y, _color, points) => {
+    gameEvents.on('itemCaught', ({ points }) => {
       this.playTone(points >= 0 ? GAME_CONFIG.audio.catchTone : GAME_CONFIG.audio.penaltyTone);
     });
 

@@ -15,7 +15,7 @@ export class ParticleBurst extends Container {
   constructor(private readonly texture: Texture) {
     super();
 
-    gameEvents.on('itemCaught', (x, y, color) => {
+    gameEvents.on('itemCaught', ({ x, y, color }) => {
       this.spawnBurst(x, y, color);
     });
   }
