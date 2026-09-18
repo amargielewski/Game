@@ -43,19 +43,12 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/game/rules/**/*.ts'],
+      files: ['src/config/**/*.ts'],
       rules: {
         'no-restricted-imports': [
           'error',
           {
-            patterns: [
-              'pixi.js',
-              '**/core/**',
-              '**/entities/**',
-              '**/scenes/**',
-              '**/presentation/**',
-              '**/config/GameConfig',
-            ],
+            patterns: ['pixi.js', '**/app/**', '**/core/**', '**/game/**', '**/presentation/**'],
           },
         ],
       },
@@ -68,6 +61,7 @@ module.exports = {
           {
             patterns: [
               'pixi.js',
+              '**/app/**',
               '**/core/**',
               '**/entities/**',
               '**/scenes/**',
@@ -76,6 +70,58 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      files: ['src/core/**/*.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: ['**/app/**', '**/game/**', '**/presentation/**', '**/storage/**'],
+          },
+        ],
+      },
+    },
+    {
+      files: ['src/game/**/*.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: ['**/app/**', '**/presentation/**', '**/storage/**'],
+          },
+        ],
+      },
+    },
+    {
+      files: ['src/game/rules/**/*.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              'pixi.js',
+              '**/app/**',
+              '**/core/**',
+              '**/config/**',
+              '**/entities/**',
+              '**/scenes/**',
+              '**/presentation/**',
+              '**/storage/**',
+            ],
+          },
+        ],
+      },
+    },
+    {
+      files: ['src/presentation/**/*.ts'],
+      rules: {
+        'no-restricted-imports': ['error', { patterns: ['**/app/**', '**/core/**'] }],
+      },
+    },
+    {
+      files: ['**/*.test.ts'],
+      rules: { 'no-restricted-imports': 'off' },
     },
   ],
 };
