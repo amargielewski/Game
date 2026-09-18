@@ -5,6 +5,7 @@ import type { Artwork } from '../Artwork';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import { ITEM_DEFINITIONS, type ItemKind } from '../../config/items';
 import type { LevelDefinition } from '../../config/levels';
+import { costsALife, hasLeftTheArena } from '../rules/departure';
 import { intersects } from '../rules/intersects';
 import { SpawnTimer } from '../rules/SpawnTimer';
 
@@ -73,8 +74,8 @@ export class ItemField extends Container {
   }
 
   public takeMissedCount(): number {
-    const gone = this.items.filter((item) => item.hasFallenBelowScreen || item.hasDriftedOffScreen);
-    const missedCount = gone.filter((item) => item.hasFallenBelowScreen && !item.isHazard).length;
+    const gone = this.items.filter(hasLeftTheArena);
+    const missedCount = gone.filter(costsALife).length;
 
     for (const item of gone) {
       this.removeItem(item);
