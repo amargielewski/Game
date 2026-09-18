@@ -1,5 +1,6 @@
 import { Overlay } from '../Overlay';
 import { translate } from '../strings';
+import { cloneTemplateRow } from '../templateRow';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import type { HighScoreStore } from '../../storage/HighScoreStore';
 
@@ -30,26 +31,10 @@ export class RankingScreen {
   }
 
   private buildRow(position: number, name: string, points: number): DocumentFragment {
-    const template = document.getElementById(GAME_CONFIG.dom.rankingRowTemplateId);
-
-    if (!(template instanceof HTMLTemplateElement)) {
-      throw new Error(`Missing template #${GAME_CONFIG.dom.rankingRowTemplateId}`);
-    }
-
-    const row = template.content.cloneNode(true) as DocumentFragment;
-
-    this.fillField(row, 'position', `${position}.`);
-    this.fillField(row, 'name', name === '' ? translate('anonymous') : name);
-    this.fillField(row, 'points', String(points));
-
-    return row;
-  }
-
-  private fillField(row: DocumentFragment, field: string, text: string): void {
-    const element = row.querySelector(`[data-field="${field}"]`);
-
-    if (element) {
-      element.textContent = text;
-    }
+    return cloneTemplateRow(GAME_CONFIG.dom.rankingRowTemplateId, {
+      position: `${position}.`,
+      name: name === '' ? translate('anonymous') : name,
+      points: String(points),
+    });
   }
 }
