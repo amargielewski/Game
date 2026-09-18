@@ -1,6 +1,6 @@
 # Feast Knight
 
-![Gameplay](docs/screenshot.png)
+![Gameplay](docs/gameplay.png)
 
 An 8-bit catch-the-falling-things game. A starving knight runs along the bottom of the
 screen collecting food that drops from above. Every catch scores, every miss costs a life,
@@ -51,6 +51,14 @@ captured while a round is running, so the menus stay navigable from the keyboard
 - every dozen seconds or so a honeycomb crosses the screen at a height you cannot reach from
   the ground — you have to jump for it
 - the top-ten ranking and the sound settings persist in `localStorage`
+
+## Screens
+
+|              Menu              |             How to play              |             Ranking              |
+| :----------------------------: | :----------------------------------: | :------------------------------: |
+|     ![Menu](docs/menu.png)     | ![How to play](docs/how-to-play.png) |   ![Ranking](docs/ranking.png)   |
+|          **Settings**          |              **Paused**              |          **Game over**           |
+| ![Settings](docs/settings.png) |      ![Paused](docs/pause.png)       | ![Game over](docs/game-over.png) |
 
 ## Architecture
 
