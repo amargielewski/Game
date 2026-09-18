@@ -1,6 +1,6 @@
 # Feast Knight
 
-![Rozgrywka](screenshot.png)
+![Rozgrywka](docs/screenshot.png)
 
 Gra typu „łapanie spadających przedmiotów" w stylu 8-bit. Wygłodniały rycerz biega u dołu
 ekranu i zbiera jedzenie spadające z góry. Każdy złapany przedmiot daje punkty, każdy
