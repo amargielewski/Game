@@ -48,7 +48,14 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            patterns: ['pixi.js', '**/app/**', '**/core/**', '**/game/**', '**/presentation/**'],
+            patterns: [
+              'pixi.js',
+              'zod',
+              '**/app/**',
+              '**/core/**',
+              '**/game/**',
+              '**/presentation/**',
+            ],
           },
         ],
       },
@@ -77,7 +84,7 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            patterns: ['**/app/**', '**/game/**', '**/presentation/**', '**/storage/**'],
+            patterns: ['zod', '**/app/**', '**/game/**', '**/presentation/**', '**/storage/**'],
           },
         ],
       },
@@ -88,7 +95,7 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            patterns: ['**/app/**', '**/presentation/**', '**/storage/**'],
+            patterns: ['zod', '**/app/**', '**/presentation/**', '**/storage/**'],
           },
         ],
       },
@@ -101,6 +108,7 @@ module.exports = {
           {
             patterns: [
               'pixi.js',
+              'zod',
               '**/app/**',
               '**/core/**',
               '**/config/**',
@@ -116,7 +124,7 @@ module.exports = {
     {
       files: ['src/presentation/**/*.ts'],
       rules: {
-        'no-restricted-imports': ['error', { patterns: ['**/app/**', '**/core/**'] }],
+        'no-restricted-imports': ['error', { patterns: ['zod', '**/app/**', '**/core/**'] }],
       },
     },
     {

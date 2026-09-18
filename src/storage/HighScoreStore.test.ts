@@ -50,4 +50,31 @@ describe('HighScoreStore reading tampered storage', () => {
 
     expect(entries.map((entry) => entry.name)).toEqual(['high', 'low']);
   });
+
+  it('drops a score too large to be a finite number', () => {
+    writeStoredValue(
+      GAME_CONFIG.storage.highScoresKey,
+      '[{"name":"overflow","points":1e999},{"name":"honest","points":7}]',
+    );
+
+    expect(new HighScoreStore().list()).toEqual([{ name: 'honest', points: 7 }]);
+  });
+
+  it('keeps only the name and the points of a stored entry', () => {
+    writeStoredValue(
+      GAME_CONFIG.storage.highScoresKey,
+      '[{"name":"padded","points":4,"injected":"payload"}]',
+    );
+
+    expect(new HighScoreStore().list()).toEqual([{ name: 'padded', points: 4 }]);
+  });
+
+  it.each(['{"name":"solo","points":5}', 'not json', 'null'])(
+    'reads %s as an empty table',
+    (stored) => {
+      writeStoredValue(GAME_CONFIG.storage.highScoresKey, stored);
+
+      expect(new HighScoreStore().list()).toEqual([]);
+    },
+  );
 });
