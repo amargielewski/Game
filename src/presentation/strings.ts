@@ -21,6 +21,7 @@ const TRANSLATIONS = {
     volume: 'Głośność',
     noScores: 'Brak wyników. Zagraj pierwszą partię.',
     clearRanking: 'Wyczyść ranking',
+    pauseAction: 'Pauza',
     pause: 'Pauza',
     resume: 'Wróć do gry',
     gameOver: 'Koniec gry',
@@ -50,6 +51,7 @@ const TRANSLATIONS = {
     volume: 'Volume',
     noScores: 'No scores yet. Play your first round.',
     clearRanking: 'Clear ranking',
+    pauseAction: 'Pause',
     pause: 'Paused',
     resume: 'Resume',
     gameOver: 'Game over',
@@ -110,6 +112,8 @@ export function translateFood(kind: ItemKind): string {
 }
 
 export function applyTranslations(root: ParentNode): void {
+  document.documentElement.lang = activeLocale;
+
   for (const element of root.querySelectorAll<HTMLElement>('[data-text]')) {
     const key = element.dataset['text'];
 
