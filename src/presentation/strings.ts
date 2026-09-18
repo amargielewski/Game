@@ -97,6 +97,11 @@ const FOOD_NAMES = {
   },
 } as const;
 
+const LOCALE_NAMES: Readonly<Record<Locale, string>> = {
+  pl: 'Polski',
+  en: 'English',
+};
+
 let activeLocale: Locale = 'pl';
 
 export function changeLocale(locale: Locale): void {
@@ -105,6 +110,10 @@ export function changeLocale(locale: Locale): void {
 
 export function translate(key: StringKey): string {
   return TRANSLATIONS[activeLocale][key];
+}
+
+export function localeName(locale: Locale): string {
+  return LOCALE_NAMES[locale];
 }
 
 export function translateFood(kind: ItemKind): string {

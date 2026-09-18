@@ -1,7 +1,7 @@
 import { Overlay } from '../Overlay';
-import { changeLocale } from '../strings';
+import { changeLocale, localeName } from '../strings';
 import { GAME_CONFIG } from '../../config/GameConfig';
-import { isLocale } from '../../config/locales';
+import { isLocale, LOCALES } from '../../config/locales';
 import type { SettingsStore } from '../../storage/SettingsStore';
 
 export interface SettingsActions {
@@ -20,6 +20,7 @@ export class SettingsScreen {
     actions: SettingsActions,
   ) {
     this.overlay.onAction('back', actions.onBack);
+    this.fillLocaleOptions();
 
     this.localeSelect.addEventListener('change', () => {
       if (!isLocale(this.localeSelect.value)) {
@@ -40,6 +41,12 @@ export class SettingsScreen {
         Number(this.volumeSlider.value) / GAME_CONFIG.audio.volumeSliderMax,
       );
     });
+  }
+
+  private fillLocaleOptions(): void {
+    this.localeSelect.replaceChildren(
+      ...LOCALES.map((locale) => new Option(localeName(locale), locale)),
+    );
   }
 
   public present(): void {
