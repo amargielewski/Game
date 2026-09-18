@@ -1,120 +1,124 @@
 # Feast Knight
 
-![Rozgrywka](docs/screenshot.png)
+![Gameplay](docs/screenshot.png)
 
-Gra typu „łapanie spadających przedmiotów" w stylu 8-bit. Wygłodniały rycerz biega u dołu
-ekranu i zbiera jedzenie spadające z góry. Każdy złapany przedmiot daje punkty, każdy
-przegapiony odbiera punkt życia. Po utracie dziesięciu żyć gra się kończy.
+An 8-bit catch-the-falling-things game. A starving knight runs along the bottom of the
+screen collecting food that drops from above. Every catch scores, every miss costs a life,
+and the game ends after ten lives are gone.
 
-## Uruchomienie
+## Running it
 
-Projekt jest przypięty do wersji z treści zadania: **Node 16.16.0 LTS / npm 8.11.0**.
+The project is pinned to the versions from the task description: **Node 16.16.0 LTS /
+npm 8.11.0**.
 
 ```bash
 nvm use && npm install && npm start
 ```
 
-`npm start` otwiera grę w przeglądarce. `package-lock.json` powstał na npm 8.11.0
-(`lockfileVersion: 2`), więc instalacja działa też na nowszych wersjach npm.
+`npm start` opens the game in a browser. `package-lock.json` was produced by npm 8.11.0
+(`lockfileVersion: 2`), so installing on newer npm works too.
 
-| Polecenie           | Działanie                          |
-| ------------------- | ---------------------------------- |
-| `npm start`         | serwer deweloperski                |
-| `npm run build`     | typecheck + build produkcyjny      |
-| `npm run lint`      | ESLint + kontrola braku komentarzy |
-| `npm run typecheck` | `tsc --noEmit`                     |
-| `npm test`          | testy jednostkowe (vitest)         |
+| Command             | What it does                   |
+| ------------------- | ------------------------------ |
+| `npm start`         | development server             |
+| `npm run build`     | typecheck + production build   |
+| `npm run lint`      | ESLint + the no-comments check |
+| `npm run typecheck` | `tsc --noEmit`                 |
+| `npm test`          | unit tests (vitest)            |
 
-Każdy push uruchamia te same kroki w GitHub Actions, a build z `main` ląduje na GitHub Pages
-(`.github/workflows/`). Publikację włącza się raz, w ustawieniach repozytorium:
-**Settings → Pages → Source: GitHub Actions**.
+Every push runs the same steps in GitHub Actions, and a build of `main` is published to
+GitHub Pages (`.github/workflows/`). Publishing is enabled once, in the repository
+settings: **Settings → Pages → Source: GitHub Actions**.
 
-## Sterowanie
+## Controls
 
-**← →** lub **A / D** — ruch · **spacja**, **↑** lub **W** — skok (w locie 60% kontroli)
-· **Esc** lub **P** — pauza · **dotyk** — dolne 70% ekranu rusza, górne 30% skacze,
-przycisk w lewym dolnym rogu pauzuje
+**← →** or **A / D** — move · **space**, **↑** or **W** — jump (60% control in the air)
+· **Esc** or **P** — pause · **touch** — the bottom 70% of the screen moves, the top 30%
+jumps, and the button in the bottom-left corner pauses
 
-Z pauzy można wrócić do gry albo wyjść do menu, nie tracąc żyć. Klawisze gry są przechwytywane
-tylko w trakcie rozgrywki, więc w menu i ustawieniach działa zwykła nawigacja z klawiatury.
+Pausing lets you resume or leave for the menu without losing lives. Game keys are only
+captured while a round is running, so the menus stay navigable from the keyboard.
 
-## Rozgrywka
+## Gameplay
 
-- 10 żyć, punkt życia za każdy przegapiony przedmiot
-- pięć poziomów: każdy skraca czas lotu przedmiotu i odstęp między spawnami oraz dokłada
-  nowe jedzenie
-- dwanaście rodzajów jedzenia; wartość rośnie z rzadkością (jabłko 1 → plaster miodu 8)
-- **larwa i robak odbierają punkty** — ich nie łap. Przegapiona larwa nie kosztuje życia,
-  bo omijanie ich jest celem, a nie błędem
-- ekran **Jak grać** pokazuje wszystkie rodzaje z ich wartością; przy pierwszym uruchomieniu
-  otwiera się sam, potem jest dostępny z menu
-- co kilkanaście sekund w poprzek ekranu przelatuje plaster miodu na wysokości nie do
-  sięgnięcia z ziemi — trzeba po niego wyskoczyć
-- ranking top 10 i ustawienia dźwięku zapisują się w `localStorage`
+- ten lives, one lost for every missed item
+- five levels: each one shortens the fall time and the gap between spawns, and adds new food
+- twelve kinds of food, worth more as they get rarer (apple 1 → honeycomb 8)
+- **the grub and the bug subtract points** — do not catch them. A missed grub costs no life,
+  because dodging it is the goal rather than a mistake
+- the **How to play** screen lists every kind with its value; it opens by itself on a first
+  visit and stays reachable from the menu afterwards
+- every dozen seconds or so a honeycomb crosses the screen at a height you cannot reach from
+  the ground — you have to jump for it
+- the top-ten ranking and the sound settings persist in `localStorage`
 
-## Architektura
+## Architecture
 
-Zależności idą w jedną stronę, a granicy pilnuje ESLint, nie dobre chęci:
+Dependencies point one way, and the boundary is held by ESLint rather than by good
+intentions:
 
 ```
-config/        ──►  (nic)              jedyne źródło wartości
-game/rules/    ──►  (nic)              czysty TypeScript, ZERO pixi, ZERO configu
+config/        ──►  (nothing)          the single source of values
+game/rules/    ──►  (nothing)          plain TypeScript, ZERO pixi, ZERO config
 storage/       ──►  config
-core/          ──►  pixi.js, config    wejście i skalowanie, nic o grze nie wie
+core/          ──►  pixi.js, config    input and scaling, knows nothing about the game
 game/          ──►  core, rules, config
-presentation/  ──►  zdarzenia, DOM     tylko słucha, nigdy nie decyduje
-app/           ──►  wszystko powyżej   jedyne miejsce, które składa całość
+presentation/  ──►  events, DOM        listens only, never decides
+app/           ──►  everything above   the only layer that wires it all together
 ```
 
-Każda z tych strzałek jest osobnym `overrides` w `.eslintrc.cjs`. Import w złą stronę nie
-przechodzi `npm run lint`.
+Each of those arrows is a separate `overrides` entry in `.eslintrc.cjs`. An import pointing
+the wrong way fails `npm run lint`.
 
-Trzy decyzje, które z tego wynikają:
+Three consequences follow:
 
-1. **Reguły gry nie mają dostępu do grafiki ani do configu** — dostają wartości przez
-   konstruktor. Dlatego punktacja, progresja poziomów, kolizje, fizyka skoku i zasada
-   „co kosztuje życie" mają testy bez mocków i bez canvasa.
-2. **Balans zapisany w czasie, nie w pikselach.** Poziom deklaruje `fallSeconds`, gracz
-   `PLAYER_CROSSING_SECONDS`, skok `JUMP_APEX_RATIO` liczone od wspólnej jednostki świata.
-   Trudność jest identyczna w poziomie i w pionie, a ruch nie zależy od liczby klatek.
-3. **Rozgrywka orkiestrowana jawnie** w `PlayScene.update`, a HUD, cząsteczki, dźwięk
-   i ranking to subskrybenci typowanych zdarzeń — dodanie efektu nie dotyka logiki gry.
+1. **Game rules reach neither the graphics nor the config** — they take their values through
+   the constructor. That is why scoring, level progression, collisions, jump physics and the
+   "what costs a life" rule are tested without mocks and without a canvas.
+2. **Balance is expressed in time, not in pixels.** A level declares `fallSeconds`, the
+   player `PLAYER_CROSSING_SECONDS`, the jump `JUMP_APEX_RATIO`, all derived from one shared
+   world unit. Difficulty is identical horizontally and vertically, and movement does not
+   depend on the frame rate.
+3. **The round is orchestrated explicitly** in `PlayScene.update`, while the HUD, particles,
+   sound and ranking are subscribers to typed events — adding an effect does not touch game
+   logic.
 
-Warstwa UI to czysty DOM: siedem ekranów na `<template>` i atrybucie `hidden`, bez frameworka.
-Interfejs jest dwujęzyczny (`pl` / `en`) — język wykrywany z ustawień przeglądarki i
-przełączalny w Ustawieniach, razem z całą zawartością generowaną dynamicznie.
+The UI layer is plain DOM: seven screens built on `<template>` and the `hidden` attribute,
+no framework. The interface is bilingual (`pl` / `en`), with the language detected from
+browser settings and switchable in Settings, together with everything generated at runtime.
 
-### Jak to rozwijać
+### Extending it
 
-| Rozszerzenie         | Pliki do zmiany                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------------- |
-| Nowy rodzaj jedzenia | plik w `src/assets/food/`, `config/items.ts`, `config/levels.ts`, `presentation/strings.ts` |
-| Nowy poziom          | `config/levels.ts` (same dane)                                                              |
-| Bomba / power-up     | nowa podklasa `Entity` + reguła w `ScoreBoard`                                              |
-| Ranking online       | podmiana `storage/HighScoreStore.ts`                                                        |
-| Sterowanie padem     | `core/InputManager.ts`                                                                      |
-| Nowy ekran           | `<section>` w `index.html` + `Overlay` na liście w `AppFlow`                                |
-| Zmiana balansu       | `config/GameConfig.ts`                                                                      |
-| Kolejny język        | `presentation/strings.ts`                                                                   |
+| Extension        | Files to touch                                                                                 |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| New kind of food | a file in `src/assets/food/`, `config/items.ts`, `config/levels.ts`, `presentation/strings.ts` |
+| New level        | `config/levels.ts` (data only)                                                                 |
+| Bomb / power-up  | a new `Entity` subclass + a rule in `ScoreBoard`                                               |
+| Online ranking   | swap out `storage/HighScoreStore.ts`                                                           |
+| Gamepad support  | `core/InputManager.ts`                                                                         |
+| New screen       | a `<section>` in `index.html` + an `Overlay` in the `AppFlow` list                             |
+| Balance tweaks   | `config/GameConfig.ts`                                                                         |
+| Another language | `config/locales.ts` + `presentation/strings.ts`                                                |
 
-Żaden wiersz nie wymaga wejścia w `game/rules/`. Sprite'y są indeksowane przez
-`import.meta.glob`, więc nowa grafika nie wymaga dopisywania importu — wystarczy nazwa pliku
-zgodna z rodzajem (`Cheese.png` → `cheese`).
+Not one row requires going into `game/rules/`. Sprites are indexed with `import.meta.glob`,
+so new artwork needs no import — only a file name matching its kind (`Cheese.png` →
+`cheese`).
 
-### Znane ograniczenia
+### Known limitations
 
-- Orientacja (pion / poziom) jest wybierana raz, przy starcie. Gra skaluje się do każdego
-  rozmiaru okna, ale po obrocie telefonu trzeba odświeżyć stronę, żeby dostać układ
-  dopasowany do nowej orientacji.
-- Ranking i ustawienia żyją w `localStorage` jednej przeglądarki — nie ma synchronizacji
-  między urządzeniami.
+- Orientation (portrait / landscape) is picked once, at startup. The game scales to any
+  window size, but after rotating a phone you need to reload to get a layout matched to the
+  new orientation.
+- The ranking and the settings live in one browser's `localStorage` — there is no sync
+  between devices.
 
-## Materiały
+## Credits
 
-- Postać: [4 Directional Character](https://lionheart963.itch.io/4-directional-character) —
-  lionheart963. Wykorzystane klatki `idle` i `run left/right` (84×84), w `src/assets/knight/`.
-- Jedzenie: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) — Henry Software
-  (grafika: benmhenry@gmail.com). Dwanaście sprite'ów 16×16, w `src/assets/food/`.
-- Czcionka: Press Start 2P (Google Fonts, SIL OFL), fallback systemowy monospace.
+- Character: [4 Directional Character](https://lionheart963.itch.io/4-directional-character) —
+  lionheart963. The `idle` and `run left/right` frames (84×84) are used, in `src/assets/knight/`.
+- Food: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) — Henry Software
+  (artwork: benmhenry@gmail.com). Twelve 16×16 sprites, in `src/assets/food/`.
+- Font: Press Start 2P (Google Fonts, SIL OFL), falling back to the system monospace.
 
-Tło, chmury, serca i cząsteczki są rysowane proceduralnie w kodzie — nie pochodzą z paczek.
+The background, clouds, hearts and particles are drawn procedurally in code — they do not
+come from either pack.
