@@ -7,7 +7,7 @@ export interface CaughtItem {
   readonly y: number;
 }
 
-type GameEvents = {
+type GameEventMap = {
   scoreChanged: [points: number];
   livesChanged: [lives: number];
   levelChanged: [levelNumber: number];
@@ -16,4 +16,4 @@ type GameEvents = {
   gameOver: [points: number];
 };
 
-export const gameEvents = new utils.EventEmitter<GameEvents>();
+export class GameEvents extends utils.EventEmitter<GameEventMap> {}

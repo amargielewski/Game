@@ -1,6 +1,6 @@
 import type { Container } from 'pixi.js';
 import { PlayScene } from '../game/scenes/PlayScene';
-import { gameEvents } from '../game/events';
+import type { GameEvents } from '../game/events';
 import type { Artwork } from '../game/Artwork';
 import type { InputManager } from '../core/InputManager';
 import type { Hud } from '../presentation/Hud';
@@ -34,6 +34,7 @@ export class AppFlow {
     private readonly sfx: Sfx,
     private readonly settings: SettingsStore,
     highScores: HighScoreStore,
+    private readonly gameEvents: GameEvents,
   ) {
     this.guideScreen = new GuideScreen(() => {
       this.goToMenu();
@@ -101,7 +102,7 @@ export class AppFlow {
       this.goToMenu();
     });
 
-    gameEvents.on('gameOver', (points) => {
+    this.gameEvents.on('gameOver', (points) => {
       this.input.setGameplayActive(false);
       this.gameOverScreen.present(points);
       this.hudControls.hide();
@@ -142,7 +143,7 @@ export class AppFlow {
     this.input.reset();
     this.disposePlayScene();
 
-    const scene = new PlayScene(this.artwork, this.input);
+    const scene = new PlayScene(this.artwork, this.input, this.gameEvents);
 
     this.playScene = scene;
     this.paused = false;

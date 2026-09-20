@@ -1,6 +1,6 @@
 import { Container, Sprite, Text, type Texture } from 'pixi.js';
 import { GAME_CONFIG } from '../config/GameConfig';
-import { gameEvents } from '../game/events';
+import type { GameEvents } from '../game/events';
 import { translate } from './strings';
 
 export class Hud extends Container {
@@ -12,6 +12,7 @@ export class Hud extends Container {
   constructor(
     private readonly fullHeartTexture: Texture,
     private readonly emptyHeartTexture: Texture,
+    private readonly gameEvents: GameEvents,
   ) {
     super();
 
@@ -42,15 +43,15 @@ export class Hud extends Container {
   }
 
   private subscribeToGameEvents(): void {
-    gameEvents.on('scoreChanged', (points) => {
+    this.gameEvents.on('scoreChanged', (points) => {
       this.scoreLabel.text = String(points);
     });
 
-    gameEvents.on('livesChanged', (lives) => {
+    this.gameEvents.on('livesChanged', (lives) => {
       this.drawHearts(lives);
     });
 
-    gameEvents.on('levelChanged', (levelNumber) => {
+    this.gameEvents.on('levelChanged', (levelNumber) => {
       this.banner.text = `${translate('level')} ${levelNumber}`;
       this.bannerSecondsLeft = GAME_CONFIG.hud.bannerSeconds;
     });
