@@ -65,10 +65,17 @@ export class InputManager {
     this.releaseMovePointer();
   };
 
+  private readonly handleVisibilityChange = (): void => {
+    if (document.hidden && this.isGameplayActive) {
+      this.isPauseRequested = true;
+    }
+  };
+
   public start(canvas: HTMLCanvasElement): void {
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
     window.addEventListener('blur', this.handleWindowBlur);
+    document.addEventListener('visibilitychange', this.handleVisibilityChange);
     canvas.addEventListener('pointerdown', this.handlePointerDown);
     canvas.addEventListener('pointermove', this.handlePointerMove);
     canvas.addEventListener('pointerup', this.handlePointerRelease);
