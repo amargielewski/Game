@@ -1,10 +1,11 @@
 import type { ItemKind } from './items';
 
-const isPortraitViewport = typeof window !== 'undefined' && window.innerHeight > window.innerWidth;
-const designWidth = isPortraitViewport ? 720 : 1280;
-const designHeight = isPortraitViewport ? 1280 : 720;
-const groundY = designHeight - 56;
-const worldUnit = Math.min(designWidth, designHeight);
+const IS_PORTRAIT_VIEWPORT =
+  typeof window !== 'undefined' && window.innerHeight > window.innerWidth;
+const DESIGN_WIDTH = IS_PORTRAIT_VIEWPORT ? 720 : 1280;
+const DESIGN_HEIGHT = IS_PORTRAIT_VIEWPORT ? 1280 : 720;
+const GROUND_Y = DESIGN_HEIGHT - 56;
+const WORLD_UNIT = Math.min(DESIGN_WIDTH, DESIGN_HEIGHT);
 
 const PLAYER_CROSSING_SECONDS = 1.25;
 const PLAYER_CATCH_WIDTH_RATIO = 0.075;
@@ -28,18 +29,18 @@ const HUD_LABEL_STYLE = {
 
 export const GAME_CONFIG = {
   arena: {
-    designWidth,
-    designHeight,
-    groundY,
+    designWidth: DESIGN_WIDTH,
+    designHeight: DESIGN_HEIGHT,
+    groundY: GROUND_Y,
     backgroundColor: 0x0b0b12,
     maxDeltaSeconds: 0.1,
   },
   player: {
-    speed: designWidth / PLAYER_CROSSING_SECONDS,
+    speed: DESIGN_WIDTH / PLAYER_CROSSING_SECONDS,
     scale: 1.5,
-    catchWidth: designWidth * PLAYER_CATCH_WIDTH_RATIO,
+    catchWidth: DESIGN_WIDTH * PLAYER_CATCH_WIDTH_RATIO,
     catchHeight: 104,
-    jumpApexHeight: worldUnit * JUMP_APEX_RATIO,
+    jumpApexHeight: WORLD_UNIT * JUMP_APEX_RATIO,
     jumpRiseSeconds: 0.38,
     airControlFactor: 0.6,
     runAnimationSpeed: 0.22,
@@ -50,13 +51,13 @@ export const GAME_CONFIG = {
   },
   items: {
     size: 64,
-    spawnMargin: designWidth * SPAWN_MARGIN_RATIO,
+    spawnMargin: DESIGN_WIDTH * SPAWN_MARGIN_RATIO,
     offScreenCullMargin: 160,
     maxSpin: 1.6,
   },
   bonus: {
     kind: 'honeycomb' satisfies ItemKind,
-    laneY: groundY - worldUnit * BONUS_LANE_RATIO,
+    laneY: GROUND_Y - WORLD_UNIT * BONUS_LANE_RATIO,
     intervalSeconds: 13,
     crossingSeconds: 3.6,
   },
@@ -76,7 +77,7 @@ export const GAME_CONFIG = {
     labelStyle: HUD_LABEL_STYLE,
     bannerStyle: { ...HUD_LABEL_STYLE, fontSize: 44, fill: 0xffd24a },
     scorePosition: { x: 28, y: 26 },
-    heartsPosition: { x: designWidth - 28, y: 34 },
+    heartsPosition: { x: DESIGN_WIDTH - 28, y: 34 },
     heartSpacing: 34,
     bannerSeconds: 1.6,
     bannerOffsetY: -60,

@@ -3,9 +3,9 @@ import { Player } from '../entities/Player';
 import { ItemField } from '../entities/ItemField';
 import { ScoreBoard } from '../rules/ScoreBoard';
 import { LevelProgression } from '../rules/LevelProgression';
-import { GAME_CONFIG } from '../../config/GameConfig';
+import { GAME_CONFIG } from '../../config/gameConfig';
 import { LEVELS, type LevelDefinition } from '../../config/levels';
-import type { GameEvents } from '../events';
+import type { GameEvents } from '../GameEvents';
 import type { Artwork } from '../Artwork';
 import type { InputManager } from '../../core/InputManager';
 

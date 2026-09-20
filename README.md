@@ -111,12 +111,11 @@ browser settings and switchable in Settings, together with everything generated 
 | Online ranking   | swap out `storage/HighScoreStore.ts`                                                           |
 | Gamepad support  | `core/InputManager.ts`                                                                         |
 | New screen       | a `<section>` in `index.html` + an `Overlay` in the `AppFlow` list                             |
-| Balance tweaks   | `config/GameConfig.ts`                                                                         |
+| Balance tweaks   | `config/gameConfig.ts`                                                                         |
 | Another language | `config/locales.ts` + `presentation/strings.ts`                                                |
 
 Not one row requires going into `game/rules/`. Sprites are indexed with `import.meta.glob`,
-so new artwork needs no import, only a file name matching its kind (`Cheese.png` →
-`cheese`).
+so new artwork needs no import, only a file named after its kind (`cheese.png`).
 
 ### Known limitations
 

@@ -1,7 +1,7 @@
 import { Overlay } from '../Overlay';
 import { translate } from '../strings';
 import { cloneTemplateRow } from '../templateRow';
-import { GAME_CONFIG } from '../../config/GameConfig';
+import { GAME_CONFIG } from '../../config/gameConfig';
 import type { HighScoreStore } from '../../storage/HighScoreStore';
 
 export class RankingScreen {

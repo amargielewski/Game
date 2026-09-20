@@ -1,4 +1,4 @@
-import { GAME_CONFIG } from '../config/GameConfig';
+import { GAME_CONFIG } from '../config/gameConfig';
 
 export class InputManager {
   private readonly pressedKeys: Set<string> = new Set();

@@ -1,6 +1,6 @@
 import type { Container } from 'pixi.js';
 import { PlayScene } from '../game/scenes/PlayScene';
-import type { GameEvents } from '../game/events';
+import type { GameEvents } from '../game/GameEvents';
 import type { Artwork } from '../game/Artwork';
 import type { InputManager } from '../core/InputManager';
 import type { Hud } from '../presentation/Hud';

@@ -1,7 +1,7 @@
 import { AnimatedSprite, type Texture } from 'pixi.js';
 import { Entity } from './Entity';
 import type { InputManager } from '../../core/InputManager';
-import { GAME_CONFIG } from '../../config/GameConfig';
+import { GAME_CONFIG } from '../../config/gameConfig';
 import type { Bounds } from '../rules/intersects';
 import { Jump } from '../rules/Jump';
 
