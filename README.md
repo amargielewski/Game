@@ -6,6 +6,8 @@ An 8-bit catch-the-falling-things game. A starving knight runs along the bottom 
 screen collecting food that drops from above. Every catch scores, every miss costs a life,
 and the game ends after ten lives are gone.
 
+**[Play it in the browser](https://amargielewski.github.io/Game/)**
+
 ## Running it
 
 The project is pinned to the versions from the task description: **Node 16.16.0 LTS /
