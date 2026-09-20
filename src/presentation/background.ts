@@ -1,5 +1,5 @@
 import { Container, Graphics } from 'pixi.js';
-import { GAME_CONFIG } from '../config/gameConfig';
+import { GAME_CONFIG } from '../config/game-config';
 
 interface DriftingCloud {
   readonly shape: Container;

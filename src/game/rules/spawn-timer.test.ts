@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SpawnTimer } from './SpawnTimer';
+import { SpawnTimer } from './spawn-timer';
 
 describe('SpawnTimer', () => {
   it('reports no spawn before the interval elapses', () => {

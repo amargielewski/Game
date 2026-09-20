@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { HighScoreStore } from './HighScoreStore';
-import { GAME_CONFIG } from '../config/gameConfig';
-import { writeStoredValue } from './safeLocalStorage';
+import { HighScoreStore } from './high-score-store';
+import { GAME_CONFIG } from '../config/game-config';
+import { writeStoredValue } from './safe-local-storage';
 
 describe('HighScoreStore', () => {
   let store: HighScoreStore;

@@ -1,8 +1,8 @@
-import { Overlay } from '../Overlay';
+import { Overlay } from '../overlay';
 import { translate } from '../strings';
-import { cloneTemplateRow } from '../templateRow';
-import { GAME_CONFIG } from '../../config/gameConfig';
-import type { HighScoreStore } from '../../storage/HighScoreStore';
+import { cloneTemplateRow } from '../template-row';
+import { GAME_CONFIG } from '../../config/game-config';
+import type { HighScoreStore } from '../../storage/high-score-store';
 
 export class RankingScreen {
   public readonly overlay: Overlay = new Overlay('screen-ranking');

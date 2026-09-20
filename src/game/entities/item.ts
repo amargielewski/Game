@@ -1,6 +1,6 @@
 import { Sprite, type Texture } from 'pixi.js';
-import { Entity } from './Entity';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { Entity } from './entity';
+import { GAME_CONFIG } from '../../config/game-config';
 import { isHazard, type ItemDefinition } from '../../config/items';
 
 export class Item extends Entity {

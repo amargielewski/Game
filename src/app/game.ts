@@ -1,13 +1,13 @@
 import { Application, Assets, BaseTexture, Container, SCALE_MODES, type Texture } from 'pixi.js';
-import { Viewport } from '../core/Viewport';
-import { InputManager } from '../core/InputManager';
-import { Artwork } from '../game/Artwork';
-import { World } from './World';
+import { Viewport } from '../core/viewport';
+import { InputManager } from '../core/input-manager';
+import { Artwork } from '../game/artwork';
+import { World } from './world';
 import { ALL_ASSET_URLS } from '../config/assets';
-import { GAME_CONFIG } from '../config/gameConfig';
-import { LoadingScreen } from '../presentation/screens/LoadingScreen';
+import { GAME_CONFIG } from '../config/game-config';
+import { LoadingScreen } from '../presentation/screens/loading-screen';
 import { applyTranslations, changeLocale } from '../presentation/strings';
-import { SettingsStore } from '../storage/SettingsStore';
+import { SettingsStore } from '../storage/settings-store';
 
 export class Game {
   private readonly application: Application<HTMLCanvasElement>;

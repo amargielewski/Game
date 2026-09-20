@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LevelProgression } from './LevelProgression';
+import { LevelProgression } from './level-progression';
 
 const LEVELS = [
   { scoreToAdvance: 10, fallSeconds: 4 },

@@ -1,5 +1,5 @@
-import { Overlay } from '../Overlay';
-import type { HighScoreStore } from '../../storage/HighScoreStore';
+import { Overlay } from '../overlay';
+import type { HighScoreStore } from '../../storage/high-score-store';
 
 export class GameOverScreen {
   public readonly overlay: Overlay = new Overlay('screen-gameover');

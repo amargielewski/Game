@@ -1,9 +1,9 @@
 import { AnimatedSprite, type Texture } from 'pixi.js';
-import { Entity } from './Entity';
-import type { InputManager } from '../../core/InputManager';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { Entity } from './entity';
+import type { InputManager } from '../../core/input-manager';
+import { GAME_CONFIG } from '../../config/game-config';
 import type { Bounds } from '../rules/intersects';
-import { Jump } from '../rules/Jump';
+import { Jump } from '../rules/jump';
 
 const PIXI_TICKS_PER_SECOND = 60;
 

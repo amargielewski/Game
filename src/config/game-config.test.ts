@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { KNIGHT_IDLE_URLS, KNIGHT_RUN_LEFT_URLS, KNIGHT_RUN_RIGHT_URLS } from './assets';
-import { GAME_CONFIG } from './gameConfig';
+import { GAME_CONFIG } from './game-config';
 import { ITEM_DEFINITIONS, isHazard } from './items';
-import { Jump } from '../game/rules/Jump';
+import { Jump } from '../game/rules/jump';
 
 const { groundY } = GAME_CONFIG.arena;
 const { catchHeight, jumpApexHeight, jumpRiseSeconds, speed, airControlFactor } =

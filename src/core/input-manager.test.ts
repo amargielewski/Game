@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { InputManager } from './InputManager';
+import { InputManager } from './input-manager';
 
 const WINDOW_WIDTH = 1000;
 const WINDOW_HEIGHT = 800;

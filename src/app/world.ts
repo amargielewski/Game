@@ -1,15 +1,15 @@
 import { Container } from 'pixi.js';
-import { AppFlow } from './AppFlow';
-import type { Artwork } from '../game/Artwork';
-import { GameEvents } from '../game/GameEvents';
-import { GAME_CONFIG } from '../config/gameConfig';
-import type { InputManager } from '../core/InputManager';
-import { Background } from '../presentation/Background';
-import { Hud } from '../presentation/Hud';
-import { ParticleBurst } from '../presentation/ParticleBurst';
-import { Sfx } from '../presentation/Sfx';
-import type { SettingsStore } from '../storage/SettingsStore';
-import { HighScoreStore } from '../storage/HighScoreStore';
+import { AppFlow } from './app-flow';
+import type { Artwork } from '../game/artwork';
+import { GameEvents } from '../game/game-events';
+import { GAME_CONFIG } from '../config/game-config';
+import type { InputManager } from '../core/input-manager';
+import { Background } from '../presentation/background';
+import { Hud } from '../presentation/hud';
+import { ParticleBurst } from '../presentation/particle-burst';
+import { Sfx } from '../presentation/sfx';
+import type { SettingsStore } from '../storage/settings-store';
+import { HighScoreStore } from '../storage/high-score-store';
 
 export class World {
   private readonly background: Background = new Background();
