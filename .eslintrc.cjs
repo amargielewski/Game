@@ -20,6 +20,13 @@ module.exports = {
     'id-length': ['error', { min: 2, exceptions: ['x', 'y'] }],
     'prefer-const': 'error',
     eqeqeq: ['error', 'always'],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'ObjectPattern',
+        message: 'Read objects through their path instead of destructuring them.',
+      },
+    ],
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': 'error',
     '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],

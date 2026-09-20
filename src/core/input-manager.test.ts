@@ -72,51 +72,51 @@ afterEach(() => {
 
 describe('pointer steering', () => {
   it('keeps moving while a second finger taps for a jump', () => {
-    const { input, fire } = startInput();
+    const harness = startInput();
 
-    fire('pointerdown', holdRightSide(1));
-    fire('pointerdown', tapJumpArea(2));
-    fire('pointerup', tapJumpArea(2));
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointerdown', tapJumpArea(2));
+    harness.fire('pointerup', tapJumpArea(2));
 
-    expect(input.consumeJumpRequest()).toBe(true);
-    expect(input.horizontalAxis).toBe(1);
+    expect(harness.input.consumeJumpRequest()).toBe(true);
+    expect(harness.input.horizontalAxis).toBe(1);
   });
 
   it('stops when the steering finger is lifted', () => {
-    const { input, fire } = startInput();
+    const harness = startInput();
 
-    fire('pointerdown', holdRightSide(1));
-    fire('pointerup', holdRightSide(1));
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointerup', holdRightSide(1));
 
-    expect(input.horizontalAxis).toBe(0);
+    expect(harness.input.horizontalAxis).toBe(0);
   });
 
   it('ignores movement of a finger that never started steering', () => {
-    const { input, fire } = startInput();
+    const harness = startInput();
 
-    fire('pointerdown', holdRightSide(1));
-    fire('pointermove', { pointerId: 7, clientX: 0, clientY: WINDOW_HEIGHT * 0.8 });
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointermove', { pointerId: 7, clientX: 0, clientY: WINDOW_HEIGHT * 0.8 });
 
-    expect(input.horizontalAxis).toBe(1);
+    expect(harness.input.horizontalAxis).toBe(1);
   });
 });
 
 describe('leaving the tab', () => {
   it('asks for a pause when the tab is hidden during a round', () => {
-    const { input, hideTab } = startInput();
+    const harness = startInput();
 
-    input.setGameplayActive(true);
-    hideTab();
+    harness.input.setGameplayActive(true);
+    harness.hideTab();
 
-    expect(input.consumePauseRequest()).toBe(true);
+    expect(harness.input.consumePauseRequest()).toBe(true);
   });
 
   it('asks for nothing outside a round, so a paused game stays paused', () => {
-    const { input, hideTab } = startInput();
+    const harness = startInput();
 
-    input.setGameplayActive(false);
-    hideTab();
+    harness.input.setGameplayActive(false);
+    harness.hideTab();
 
-    expect(input.consumePauseRequest()).toBe(false);
+    expect(harness.input.consumePauseRequest()).toBe(false);
   });
 });

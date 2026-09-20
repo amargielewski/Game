@@ -123,14 +123,15 @@ describe('ItemField missing', () => {
 describe('ItemField spawning', () => {
   it('drops every item inside the horizontal spawn margins', () => {
     const field = fieldDropping('apple', 0.1);
-    const { spawnMargin } = GAME_CONFIG.items;
 
     field.update(MID_FALL_SECONDS);
 
     expect(field.children.length).toBeGreaterThan(1);
     for (const item of field.children) {
-      expect(item.x).toBeGreaterThanOrEqual(spawnMargin);
-      expect(item.x).toBeLessThanOrEqual(GAME_CONFIG.arena.designWidth - spawnMargin);
+      expect(item.x).toBeGreaterThanOrEqual(GAME_CONFIG.items.spawnMargin);
+      expect(item.x).toBeLessThanOrEqual(
+        GAME_CONFIG.arena.designWidth - GAME_CONFIG.items.spawnMargin,
+      );
     }
   });
 });

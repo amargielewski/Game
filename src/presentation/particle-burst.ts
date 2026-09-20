@@ -18,48 +18,46 @@ export class ParticleBurst extends Container {
   ) {
     super();
 
-    gameEvents.on('itemCaught', ({ x, y, color }) => {
-      this.spawnBurst(x, y, color);
+    gameEvents.on('itemCaught', (item) => {
+      this.spawnBurst(item.x, item.y, item.color);
     });
   }
 
   public update(deltaSeconds: number): void {
-    const { lifeSeconds, gravity } = GAME_CONFIG.particles;
-
     for (const particle of [...this.particles]) {
       particle.ageSeconds += deltaSeconds;
 
-      if (particle.ageSeconds >= lifeSeconds) {
+      if (particle.ageSeconds >= GAME_CONFIG.particles.lifeSeconds) {
         this.removeParticle(particle);
         continue;
       }
 
-      particle.velocityY += gravity * deltaSeconds;
+      particle.velocityY += GAME_CONFIG.particles.gravity * deltaSeconds;
       particle.sprite.x += particle.velocityX * deltaSeconds;
       particle.sprite.y += particle.velocityY * deltaSeconds;
-      particle.sprite.alpha = 1 - particle.ageSeconds / lifeSeconds;
+      particle.sprite.alpha = 1 - particle.ageSeconds / GAME_CONFIG.particles.lifeSeconds;
     }
   }
 
   private spawnBurst(x: number, y: number, color: number): void {
-    const { perBurst, minSpeed, speedSpread, upwardBias, minScale, scaleSpread } =
-      GAME_CONFIG.particles;
-
-    for (let index = 0; index < perBurst; index += 1) {
-      const angle = (Math.PI * 2 * index) / perBurst;
-      const speed = minSpeed + Math.random() * speedSpread;
+    for (let index = 0; index < GAME_CONFIG.particles.perBurst; index += 1) {
+      const angle = (Math.PI * 2 * index) / GAME_CONFIG.particles.perBurst;
+      const speed =
+        GAME_CONFIG.particles.minSpeed + Math.random() * GAME_CONFIG.particles.speedSpread;
       const sprite = new Sprite(this.texture);
 
       sprite.anchor.set(0.5);
       sprite.tint = color;
-      sprite.scale.set(minScale + Math.random() * scaleSpread);
+      sprite.scale.set(
+        GAME_CONFIG.particles.minScale + Math.random() * GAME_CONFIG.particles.scaleSpread,
+      );
       sprite.position.set(x, y);
       this.addChild(sprite);
 
       this.particles.push({
         sprite,
         velocityX: Math.cos(angle) * speed,
-        velocityY: Math.sin(angle) * speed - upwardBias,
+        velocityY: Math.sin(angle) * speed - GAME_CONFIG.particles.upwardBias,
         ageSeconds: 0,
       });
     }

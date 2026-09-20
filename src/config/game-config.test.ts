@@ -4,13 +4,9 @@ import { GAME_CONFIG } from './game-config';
 import { ITEM_DEFINITIONS, isHazard } from './items';
 import { Jump } from '../game/rules/jump';
 
-const { groundY } = GAME_CONFIG.arena;
-const { catchHeight, jumpApexHeight, jumpRiseSeconds, speed, airControlFactor } =
-  GAME_CONFIG.player;
-
 function catchBoxOverlapsBonusLaneAt(height: number): boolean {
-  const boxTop = groundY - height - catchHeight;
-  const boxBottom = groundY - height;
+  const boxTop = GAME_CONFIG.arena.groundY - height - GAME_CONFIG.player.catchHeight;
+  const boxBottom = GAME_CONFIG.arena.groundY - height;
   const laneTop = GAME_CONFIG.bonus.laneY - GAME_CONFIG.items.size / 2;
   const laneBottom = GAME_CONFIG.bonus.laneY + GAME_CONFIG.items.size / 2;
 
@@ -23,16 +19,16 @@ describe('bonus lane tuning', () => {
   });
 
   it('comes into reach at the top of a jump', () => {
-    expect(catchBoxOverlapsBonusLaneAt(jumpApexHeight)).toBe(true);
+    expect(catchBoxOverlapsBonusLaneAt(GAME_CONFIG.player.jumpApexHeight)).toBe(true);
   });
 
   it('is reached by an actual jump, not only by the configured apex', () => {
-    const jump = new Jump(jumpApexHeight, jumpRiseSeconds);
+    const jump = new Jump(GAME_CONFIG.player.jumpApexHeight, GAME_CONFIG.player.jumpRiseSeconds);
     const step = 1 / 60;
     let isEverInReach = false;
 
     jump.start();
-    for (let elapsed = 0; elapsed < jumpRiseSeconds * 2; elapsed += step) {
+    for (let elapsed = 0; elapsed < GAME_CONFIG.player.jumpRiseSeconds * 2; elapsed += step) {
       jump.update(step);
       isEverInReach = isEverInReach || catchBoxOverlapsBonusLaneAt(jump.height);
     }
@@ -43,11 +39,12 @@ describe('bonus lane tuning', () => {
 
 describe('jump arc shape', () => {
   it('keeps the airborne leap from skimming across the whole arena', () => {
-    const airborneSeconds = jumpRiseSeconds * 2;
-    const distance = speed * airControlFactor * airborneSeconds;
+    const airborneSeconds = GAME_CONFIG.player.jumpRiseSeconds * 2;
+    const distance =
+      GAME_CONFIG.player.speed * GAME_CONFIG.player.airControlFactor * airborneSeconds;
 
     expect(distance / GAME_CONFIG.arena.designWidth).toBeLessThan(0.5);
-    expect(distance / jumpApexHeight).toBeLessThan(3);
+    expect(distance / GAME_CONFIG.player.jumpApexHeight).toBeLessThan(3);
   });
 });
 
@@ -87,13 +84,12 @@ describe('pixel art', () => {
 
 describe('audio levels', () => {
   it('keeps every gain between silence and full volume', () => {
-    const { defaultVolume, catchTone, penaltyTone, missTone, sequenceTone } = GAME_CONFIG.audio;
     const gains = [
-      defaultVolume,
-      catchTone.gain,
-      penaltyTone.gain,
-      missTone.gain,
-      sequenceTone.gain,
+      GAME_CONFIG.audio.defaultVolume,
+      GAME_CONFIG.audio.catchTone.gain,
+      GAME_CONFIG.audio.penaltyTone.gain,
+      GAME_CONFIG.audio.missTone.gain,
+      GAME_CONFIG.audio.sequenceTone.gain,
     ];
 
     for (const gain of gains) {
