@@ -49,8 +49,8 @@ menus stay navigable from the keyboard.
 - ten lives, one lost for every missed item
 - five levels: each one shortens the fall time and the gap between spawns, and adds new food
 - twelve kinds of food, worth more as they get rarer (apple 1 → honeycomb 8)
-- **the grub and the bug subtract points**, so do not catch them. A missed grub costs no
-  life, because dodging it is the goal rather than a mistake
+- **the grub and the bug subtract points** when caught, and cost a life like anything else
+  when they reach the ground, so each one is a choice between points and a life
 - the **How to play** screen lists every kind with its value; it opens by itself on a first
   visit and stays reachable from the menu afterwards
 - every dozen seconds or so a honeycomb crosses the screen at a height you cannot reach from
