@@ -1,4 +1,4 @@
-import { Overlay } from '../Overlay';
+import { Overlay } from '../overlay';
 
 export class LoadingScreen {
   private readonly overlay: Overlay = new Overlay('screen-loading');

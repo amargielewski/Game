@@ -1,7 +1,7 @@
-import { Overlay } from '../Overlay';
+import { Overlay } from '../overlay';
 import { translateFood } from '../strings';
-import { cloneTemplateRow } from '../templateRow';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { cloneTemplateRow } from '../template-row';
+import { GAME_CONFIG } from '../../config/game-config';
 import { FOOD_URLS } from '../../config/assets';
 import { ITEM_DEFINITIONS, ITEM_KINDS, isHazard, type ItemKind } from '../../config/items';
 

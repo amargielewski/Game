@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Jump } from './Jump';
+import { Jump } from './jump';
 
 const APEX = 180;
 const RISE_SECONDS = 0.45;

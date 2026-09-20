@@ -1,18 +1,18 @@
 import type { Container } from 'pixi.js';
-import { PlayScene } from '../game/scenes/PlayScene';
-import type { GameEvents } from '../game/GameEvents';
-import type { Artwork } from '../game/Artwork';
-import type { InputManager } from '../core/InputManager';
-import type { Hud } from '../presentation/Hud';
-import type { Sfx } from '../presentation/Sfx';
-import { Overlay } from '../presentation/Overlay';
+import { PlayScene } from '../game/scenes/play-scene';
+import type { GameEvents } from '../game/game-events';
+import type { Artwork } from '../game/artwork';
+import type { InputManager } from '../core/input-manager';
+import type { Hud } from '../presentation/hud';
+import type { Sfx } from '../presentation/sfx';
+import { Overlay } from '../presentation/overlay';
 import { applyTranslations } from '../presentation/strings';
-import { GuideScreen } from '../presentation/screens/GuideScreen';
-import { SettingsScreen } from '../presentation/screens/SettingsScreen';
-import { RankingScreen } from '../presentation/screens/RankingScreen';
-import { GameOverScreen } from '../presentation/screens/GameOverScreen';
-import type { SettingsStore } from '../storage/SettingsStore';
-import type { HighScoreStore } from '../storage/HighScoreStore';
+import { GuideScreen } from '../presentation/screens/guide-screen';
+import { SettingsScreen } from '../presentation/screens/settings-screen';
+import { RankingScreen } from '../presentation/screens/ranking-screen';
+import { GameOverScreen } from '../presentation/screens/game-over-screen';
+import type { SettingsStore } from '../storage/settings-store';
+import type { HighScoreStore } from '../storage/high-score-store';
 
 export class AppFlow {
   private readonly menuOverlay: Overlay = new Overlay('screen-menu');

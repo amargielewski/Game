@@ -5,7 +5,7 @@ import {
   KNIGHT_RUN_LEFT_URLS,
   KNIGHT_RUN_RIGHT_URLS,
 } from '../config/assets';
-import { GAME_CONFIG } from '../config/gameConfig';
+import { GAME_CONFIG } from '../config/game-config';
 import { mapItemKinds, type ItemKind } from '../config/items';
 
 export class Artwork {

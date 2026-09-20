@@ -1,14 +1,14 @@
 import { Container } from 'pixi.js';
-import { Item } from './Item';
-import type { Player } from './Player';
-import type { Artwork } from '../Artwork';
-import type { CaughtItem } from '../GameEvents';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { Item } from './item';
+import type { Player } from './player';
+import type { Artwork } from '../artwork';
+import type { CaughtItem } from '../game-events';
+import { GAME_CONFIG } from '../../config/game-config';
 import { ITEM_DEFINITIONS, type ItemKind } from '../../config/items';
 import type { LevelDefinition } from '../../config/levels';
 import { costsALife, hasLeftTheArena } from '../rules/departure';
 import { intersects } from '../rules/intersects';
-import { SpawnTimer } from '../rules/SpawnTimer';
+import { SpawnTimer } from '../rules/spawn-timer';
 
 export class ItemField extends Container {
   private readonly items: Item[] = [];

@@ -108,10 +108,10 @@ browser settings and switchable in Settings, together with everything generated 
 | New kind of food | a file in `src/assets/food/`, `config/items.ts`, `config/levels.ts`, `presentation/strings.ts` |
 | New level        | `config/levels.ts` (data only)                                                                 |
 | Bomb / power-up  | a new `Entity` subclass + a rule in `ScoreBoard`                                               |
-| Online ranking   | swap out `storage/HighScoreStore.ts`                                                           |
-| Gamepad support  | `core/InputManager.ts`                                                                         |
+| Online ranking   | swap out `storage/high-score-store.ts`                                                         |
+| Gamepad support  | `core/input-manager.ts`                                                                        |
 | New screen       | a `<section>` in `index.html` + an `Overlay` in the `AppFlow` list                             |
-| Balance tweaks   | `config/gameConfig.ts`                                                                         |
+| Balance tweaks   | `config/game-config.ts`                                                                        |
 | Another language | `config/locales.ts` + `presentation/strings.ts`                                                |
 
 Not one row requires going into `game/rules/`. Sprites are indexed with `import.meta.glob`,

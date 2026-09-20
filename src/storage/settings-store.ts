@@ -1,6 +1,6 @@
-import { GAME_CONFIG } from '../config/gameConfig';
+import { GAME_CONFIG } from '../config/game-config';
 import { isLocale, type Locale } from '../config/locales';
-import { readStoredValue, writeStoredValue } from './safeLocalStorage';
+import { readStoredValue, writeStoredValue } from './safe-local-storage';
 
 export class SettingsStore {
   public get isSoundEnabled(): boolean {

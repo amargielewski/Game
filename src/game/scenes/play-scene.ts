@@ -1,13 +1,13 @@
 import { Container } from 'pixi.js';
-import { Player } from '../entities/Player';
-import { ItemField } from '../entities/ItemField';
-import { ScoreBoard } from '../rules/ScoreBoard';
-import { LevelProgression } from '../rules/LevelProgression';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { Player } from '../entities/player';
+import { ItemField } from '../entities/item-field';
+import { ScoreBoard } from '../rules/score-board';
+import { LevelProgression } from '../rules/level-progression';
+import { GAME_CONFIG } from '../../config/game-config';
 import { LEVELS, type LevelDefinition } from '../../config/levels';
-import type { GameEvents } from '../GameEvents';
-import type { Artwork } from '../Artwork';
-import type { InputManager } from '../../core/InputManager';
+import type { GameEvents } from '../game-events';
+import type { Artwork } from '../artwork';
+import type { InputManager } from '../../core/input-manager';
 
 export class PlayScene extends Container {
   private readonly scoreBoard: ScoreBoard = new ScoreBoard(GAME_CONFIG.scoring.startingLives);

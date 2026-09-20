@@ -1,6 +1,6 @@
-import { GAME_CONFIG } from '../config/gameConfig';
-import type { GameEvents } from '../game/GameEvents';
-import type { SettingsStore } from '../storage/SettingsStore';
+import { GAME_CONFIG } from '../config/game-config';
+import type { GameEvents } from '../game/game-events';
+import type { SettingsStore } from '../storage/settings-store';
 
 const EXPONENTIAL_RAMP_FLOOR = 0.0001;
 const MILLISECONDS_PER_SECOND = 1000;

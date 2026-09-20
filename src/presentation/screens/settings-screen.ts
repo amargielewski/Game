@@ -1,8 +1,8 @@
-import { Overlay } from '../Overlay';
+import { Overlay } from '../overlay';
 import { changeLocale, localeName } from '../strings';
-import { GAME_CONFIG } from '../../config/gameConfig';
+import { GAME_CONFIG } from '../../config/game-config';
 import { isLocale, LOCALES } from '../../config/locales';
-import type { SettingsStore } from '../../storage/SettingsStore';
+import type { SettingsStore } from '../../storage/settings-store';
 
 export interface SettingsActions {
   readonly onBack: () => void;

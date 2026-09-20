@@ -1,6 +1,6 @@
 import { Container, Sprite, type Texture } from 'pixi.js';
-import { GAME_CONFIG } from '../config/gameConfig';
-import type { GameEvents } from '../game/GameEvents';
+import { GAME_CONFIG } from '../config/game-config';
+import type { GameEvents } from '../game/game-events';
 
 interface Particle {
   readonly sprite: Sprite;

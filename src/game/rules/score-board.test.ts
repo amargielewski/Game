@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ScoreBoard } from './ScoreBoard';
+import { ScoreBoard } from './score-board';
 
 describe('ScoreBoard', () => {
   it('accumulates points and never drops below zero', () => {
