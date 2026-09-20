@@ -3,7 +3,7 @@ export interface AdvanceableLevel {
 }
 
 export class LevelProgression<TLevel extends AdvanceableLevel> {
-  private currentIndex = 0;
+  private currentIndex: number = 0;
 
   constructor(private readonly levels: readonly TLevel[]) {
     if (levels.length === 0) {

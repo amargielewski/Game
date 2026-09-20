@@ -10,10 +10,10 @@ export interface SettingsActions {
 }
 
 export class SettingsScreen {
-  public readonly overlay = new Overlay('screen-settings');
-  private readonly localeSelect = this.overlay.field<HTMLSelectElement>('locale');
-  private readonly soundToggle = this.overlay.field<HTMLInputElement>('sound');
-  private readonly volumeSlider = this.overlay.field<HTMLInputElement>('volume');
+  public readonly overlay: Overlay = new Overlay('screen-settings');
+  private readonly localeSelect: HTMLSelectElement = this.overlay.field('locale');
+  private readonly soundToggle: HTMLInputElement = this.overlay.field('sound');
+  private readonly volumeSlider: HTMLInputElement = this.overlay.field('volume');
 
   constructor(
     private readonly settings: SettingsStore,

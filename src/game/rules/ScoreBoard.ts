@@ -1,5 +1,5 @@
 export class ScoreBoard {
-  private currentPoints = 0;
+  private currentPoints: number = 0;
   private remainingLives: number;
 
   constructor(startingLives: number) {

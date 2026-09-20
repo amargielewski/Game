@@ -11,8 +11,8 @@ import type { SettingsStore } from '../storage/SettingsStore';
 import { HighScoreStore } from '../storage/HighScoreStore';
 
 export class World {
-  private readonly background = new Background();
-  private readonly gameLayer = new Container();
+  private readonly background: Background = new Background();
+  private readonly gameLayer: Container = new Container();
   private readonly particles: ParticleBurst;
   private readonly hud: Hud;
   private readonly appFlow: AppFlow;

@@ -1,12 +1,12 @@
 import { GAME_CONFIG } from '../config/GameConfig';
 
 export class InputManager {
-  private readonly pressedKeys = new Set<string>();
-  private pointerAxis = 0;
+  private readonly pressedKeys: Set<string> = new Set();
+  private pointerAxis: number = 0;
   private movePointerId: number | null = null;
-  private isJumpRequested = false;
-  private isPauseRequested = false;
-  private isGameplayActive = false;
+  private isJumpRequested: boolean = false;
+  private isPauseRequested: boolean = false;
+  private isGameplayActive: boolean = false;
 
   private readonly handleKeyDown = (event: KeyboardEvent): void => {
     if (event.target instanceof HTMLInputElement) {

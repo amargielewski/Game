@@ -2,9 +2,9 @@ import { Overlay } from '../Overlay';
 import type { HighScoreStore } from '../../storage/HighScoreStore';
 
 export class GameOverScreen {
-  public readonly overlay = new Overlay('screen-gameover');
-  private readonly nameInput = this.overlay.field<HTMLInputElement>('name');
-  private lastScore = 0;
+  public readonly overlay: Overlay = new Overlay('screen-gameover');
+  private readonly nameInput: HTMLInputElement = this.overlay.field('name');
+  private lastScore: number = 0;
 
   constructor(
     private readonly highScores: HighScoreStore,

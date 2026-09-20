@@ -13,7 +13,7 @@ import { SpawnTimer } from '../rules/SpawnTimer';
 export class ItemField extends Container {
   private readonly items: Item[] = [];
   private readonly spawnTimer: SpawnTimer;
-  private readonly bonusTimer = new SpawnTimer(GAME_CONFIG.bonus.intervalSeconds);
+  private readonly bonusTimer: SpawnTimer = new SpawnTimer(GAME_CONFIG.bonus.intervalSeconds);
   private level: LevelDefinition;
 
   constructor(

@@ -6,9 +6,9 @@ import { FOOD_URLS } from '../../config/assets';
 import { ITEM_DEFINITIONS, ITEM_KINDS, isHazard, type ItemKind } from '../../config/items';
 
 export class GuideScreen {
-  public readonly overlay = new Overlay('screen-guide');
-  private readonly goodList = this.overlay.field<HTMLUListElement>('good');
-  private readonly badList = this.overlay.field<HTMLUListElement>('bad');
+  public readonly overlay: Overlay = new Overlay('screen-guide');
+  private readonly goodList: HTMLUListElement = this.overlay.field('good');
+  private readonly badList: HTMLUListElement = this.overlay.field('bad');
 
   constructor(onBack: () => void) {
     this.overlay.onAction('back', onBack);

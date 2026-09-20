@@ -4,10 +4,10 @@ import { gameEvents } from '../game/events';
 import { translate } from './strings';
 
 export class Hud extends Container {
-  private readonly scoreLabel = new Text('0', GAME_CONFIG.hud.labelStyle);
-  private readonly hearts = new Container();
-  private readonly banner = new Text('', GAME_CONFIG.hud.bannerStyle);
-  private bannerSecondsLeft = 0;
+  private readonly scoreLabel: Text = new Text('0', GAME_CONFIG.hud.labelStyle);
+  private readonly hearts: Container = new Container();
+  private readonly banner: Text = new Text('', GAME_CONFIG.hud.bannerStyle);
+  private bannerSecondsLeft: number = 0;
 
   constructor(
     private readonly fullHeartTexture: Texture,

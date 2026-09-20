@@ -28,6 +28,11 @@ module.exports = {
       { accessibility: 'explicit', overrides: { constructors: 'no-public' } },
     ],
     '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/typedef': [
+      'error',
+      { memberVariableDeclaration: true, variableDeclarationIgnoreFunction: true },
+    ],
+    '@typescript-eslint/no-inferrable-types': ['error', { ignoreProperties: true }],
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'typeLike', format: ['PascalCase'] },

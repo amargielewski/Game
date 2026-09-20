@@ -4,17 +4,17 @@ import { ItemField } from '../entities/ItemField';
 import { ScoreBoard } from '../rules/ScoreBoard';
 import { LevelProgression } from '../rules/LevelProgression';
 import { GAME_CONFIG } from '../../config/GameConfig';
-import { LEVELS } from '../../config/levels';
+import { LEVELS, type LevelDefinition } from '../../config/levels';
 import { gameEvents } from '../events';
 import type { Artwork } from '../Artwork';
 import type { InputManager } from '../../core/InputManager';
 
 export class PlayScene extends Container {
-  private readonly scoreBoard = new ScoreBoard(GAME_CONFIG.scoring.startingLives);
-  private readonly progression = new LevelProgression(LEVELS);
+  private readonly scoreBoard: ScoreBoard = new ScoreBoard(GAME_CONFIG.scoring.startingLives);
+  private readonly progression: LevelProgression<LevelDefinition> = new LevelProgression(LEVELS);
   private readonly itemField: ItemField;
   private readonly player: Player;
-  private finished = false;
+  private finished: boolean = false;
 
   constructor(artwork: Artwork, input: InputManager) {
     super();
