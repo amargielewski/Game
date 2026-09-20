@@ -1,6 +1,6 @@
 import { Container, Sprite, Text, type Texture } from 'pixi.js';
-import { GAME_CONFIG } from '../config/GameConfig';
-import type { GameEvents } from '../game/events';
+import { GAME_CONFIG } from '../config/gameConfig';
+import type { GameEvents } from '../game/GameEvents';
 import { translate } from './strings';
 
 export class Hud extends Container {

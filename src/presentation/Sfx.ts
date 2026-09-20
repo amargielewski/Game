@@ -1,5 +1,5 @@
-import { GAME_CONFIG } from '../config/GameConfig';
-import type { GameEvents } from '../game/events';
+import { GAME_CONFIG } from '../config/gameConfig';
+import type { GameEvents } from '../game/GameEvents';
 import type { SettingsStore } from '../storage/SettingsStore';
 
 const EXPONENTIAL_RAMP_FLOOR = 0.0001;

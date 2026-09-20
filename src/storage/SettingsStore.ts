@@ -1,4 +1,4 @@
-import { GAME_CONFIG } from '../config/GameConfig';
+import { GAME_CONFIG } from '../config/gameConfig';
 import { isLocale, type Locale } from '../config/locales';
 import { readStoredValue, writeStoredValue } from './safeLocalStorage';
 

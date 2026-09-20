@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { HighScoreStore } from './HighScoreStore';
-import { GAME_CONFIG } from '../config/GameConfig';
+import { GAME_CONFIG } from '../config/gameConfig';
 import { writeStoredValue } from './safeLocalStorage';
 
 describe('HighScoreStore', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { KNIGHT_IDLE_URLS, KNIGHT_RUN_LEFT_URLS, KNIGHT_RUN_RIGHT_URLS } from './assets';
-import { GAME_CONFIG } from './GameConfig';
+import { GAME_CONFIG } from './gameConfig';
 import { ITEM_DEFINITIONS, isHazard } from './items';
 import { Jump } from '../game/rules/Jump';
 

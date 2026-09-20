@@ -1,5 +1,5 @@
 import * as z from 'zod/mini';
-import { GAME_CONFIG } from '../config/GameConfig';
+import { GAME_CONFIG } from '../config/gameConfig';
 import { readStoredValue, writeStoredValue } from './safeLocalStorage';
 
 const HIGH_SCORE_ENTRY_SCHEMA = z.object({ name: z.string(), points: z.number() });

@@ -36,7 +36,25 @@ module.exports = {
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'typeLike', format: ['PascalCase'] },
-      { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE', 'camelCase'] },
+      { selector: 'variable', modifiers: ['const', 'global'], format: ['UPPER_CASE'] },
+      {
+        selector: 'variable',
+        modifiers: ['const', 'global'],
+        types: ['function'],
+        format: ['camelCase'],
+      },
+      {
+        selector: 'variable',
+        modifiers: ['const', 'global', 'destructured'],
+        format: ['camelCase'],
+      },
+      {
+        selector: 'variable',
+        modifiers: ['const', 'global'],
+        types: ['boolean'],
+        format: ['UPPER_CASE'],
+        prefix: ['IS_', 'HAS_', 'CAN_', 'SHOULD_'],
+      },
       { selector: 'memberLike', format: ['camelCase'] },
       {
         selector: 'variable',

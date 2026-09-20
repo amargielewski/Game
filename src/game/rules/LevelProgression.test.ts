@@ -1,21 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { LevelProgression } from './LevelProgression';
 
-const levels = [
+const LEVELS = [
   { scoreToAdvance: 10, fallSeconds: 4 },
   { scoreToAdvance: 20, fallSeconds: 3 },
 ];
 
 describe('LevelProgression', () => {
   it('starts on the first level', () => {
-    const progression = new LevelProgression(levels);
+    const progression = new LevelProgression(LEVELS);
 
     expect(progression.levelNumber).toBe(1);
     expect(progression.current.fallSeconds).toBe(4);
   });
 
   it('advances once the threshold is reached', () => {
-    const progression = new LevelProgression(levels);
+    const progression = new LevelProgression(LEVELS);
 
     expect(progression.advanceIfReady(9)).toBe(false);
     expect(progression.advanceIfReady(10)).toBe(true);
@@ -23,7 +23,7 @@ describe('LevelProgression', () => {
   });
 
   it('never advances past the last level', () => {
-    const progression = new LevelProgression(levels);
+    const progression = new LevelProgression(LEVELS);
 
     progression.advanceIfReady(10);
 

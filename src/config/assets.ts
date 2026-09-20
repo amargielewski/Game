@@ -28,7 +28,7 @@ function knightFrames(animation: string): readonly string[] {
 }
 
 function foodUrl(kind: ItemKind): string {
-  const match = Object.entries(FOOD_FILES).find(([path]) => baseName(path).toLowerCase() === kind);
+  const match = Object.entries(FOOD_FILES).find(([path]) => baseName(path) === kind);
 
   if (!match) {
     throw new Error(`No sprite found for food "${kind}"`);
