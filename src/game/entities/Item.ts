@@ -4,7 +4,7 @@ import { GAME_CONFIG } from '../../config/GameConfig';
 import { isHazard, type ItemDefinition } from '../../config/items';
 
 export class Item extends Entity {
-  private readonly spin = (Math.random() - 0.5) * GAME_CONFIG.items.maxSpin;
+  private readonly spin: number = (Math.random() - 0.5) * GAME_CONFIG.items.maxSpin;
 
   constructor(
     public readonly definition: ItemDefinition,

@@ -15,16 +15,16 @@ import type { SettingsStore } from '../storage/SettingsStore';
 import type { HighScoreStore } from '../storage/HighScoreStore';
 
 export class AppFlow {
-  private readonly menuOverlay = new Overlay('screen-menu');
-  private readonly pauseOverlay = new Overlay('screen-pause');
-  private readonly hudControls = new Overlay('hud-controls');
+  private readonly menuOverlay: Overlay = new Overlay('screen-menu');
+  private readonly pauseOverlay: Overlay = new Overlay('screen-pause');
+  private readonly hudControls: Overlay = new Overlay('hud-controls');
   private readonly guideScreen: GuideScreen;
   private readonly settingsScreen: SettingsScreen;
   private readonly rankingScreen: RankingScreen;
   private readonly gameOverScreen: GameOverScreen;
   private readonly overlays: readonly Overlay[];
   private playScene: PlayScene | null = null;
-  private paused = false;
+  private paused: boolean = false;
 
   constructor(
     private readonly gameLayer: Container,

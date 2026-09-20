@@ -11,8 +11,8 @@ import { SettingsStore } from '../storage/SettingsStore';
 
 export class Game {
   private readonly application: Application<HTMLCanvasElement>;
-  private readonly root = new Container();
-  private readonly input = new InputManager();
+  private readonly root: Container = new Container();
+  private readonly input: InputManager = new InputManager();
   private readonly viewport: Viewport;
 
   constructor() {

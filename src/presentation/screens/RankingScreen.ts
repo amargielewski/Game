@@ -5,8 +5,8 @@ import { GAME_CONFIG } from '../../config/GameConfig';
 import type { HighScoreStore } from '../../storage/HighScoreStore';
 
 export class RankingScreen {
-  public readonly overlay = new Overlay('screen-ranking');
-  private readonly list = this.overlay.field<HTMLOListElement>('list');
+  public readonly overlay: Overlay = new Overlay('screen-ranking');
+  private readonly list: HTMLOListElement = this.overlay.field('list');
 
   constructor(
     private readonly highScores: HighScoreStore,

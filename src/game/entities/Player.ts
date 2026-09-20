@@ -15,12 +15,12 @@ export interface KnightAnimations {
 
 export class Player extends Entity {
   private readonly sprite: AnimatedSprite;
-  private readonly jump = new Jump(
+  private readonly jump: Jump = new Jump(
     GAME_CONFIG.player.jumpApexHeight,
     GAME_CONFIG.player.jumpRiseSeconds,
   );
   private currentFrames: readonly Texture[];
-  private facing = 1;
+  private facing: number = 1;
 
   constructor(
     private readonly animations: KnightAnimations,

@@ -1,7 +1,7 @@
 const MINIMUM_INTERVAL_SECONDS = 0.05;
 
 export class SpawnTimer {
-  private elapsedSeconds = 0;
+  private elapsedSeconds: number = 0;
 
   constructor(private intervalSeconds: number) {}
 

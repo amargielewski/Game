@@ -1,6 +1,6 @@
 export class Jump {
-  private verticalSpeed = 0;
-  private currentHeight = 0;
+  private verticalSpeed: number = 0;
+  private currentHeight: number = 0;
 
   constructor(
     private readonly apexHeight: number,
