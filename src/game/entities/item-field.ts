@@ -1,6 +1,6 @@
 import { Container } from 'pixi.js';
+import type { Entity } from './entity';
 import { Item } from './item';
-import type { Player } from './player';
 import type { Artwork } from '../artwork';
 import type { CaughtItem } from '../game-events';
 import { GAME_CONFIG } from '../../config/game-config';
@@ -17,7 +17,7 @@ export class ItemField extends Container {
   private level: LevelDefinition;
 
   constructor(
-    private readonly artwork: Artwork,
+    private readonly artwork: Pick<Artwork, 'foodTextures'>,
     startingLevel: LevelDefinition,
   ) {
     super();
@@ -47,11 +47,11 @@ export class ItemField extends Container {
     }
   }
 
-  public takeCaughtBy(player: Player): readonly CaughtItem[] {
+  public takeCaughtBy(catcher: Pick<Entity, 'hitBounds'>): readonly CaughtItem[] {
     const caught: CaughtItem[] = [];
 
     for (const item of [...this.items]) {
-      if (!intersects(player.hitBounds, item.hitBounds)) {
+      if (!intersects(catcher.hitBounds, item.hitBounds)) {
         continue;
       }
 
