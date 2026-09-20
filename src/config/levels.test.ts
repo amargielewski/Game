@@ -29,4 +29,12 @@ describe('level table', () => {
       expect(level.spawnPool.some((kind) => !isHazard(ITEM_DEFINITIONS[kind]))).toBe(true);
     }
   });
+
+  it('keeps hazards to a quarter of any spawn pool at most', () => {
+    for (const level of LEVELS) {
+      const hazards = level.spawnPool.filter((kind) => isHazard(ITEM_DEFINITIONS[kind]));
+
+      expect(hazards.length / level.spawnPool.length).toBeLessThanOrEqual(0.25);
+    }
+  });
 });

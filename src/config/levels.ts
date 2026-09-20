@@ -30,12 +30,12 @@ export const LEVELS: readonly LevelDefinition[] = [
     scoreToAdvance: 100,
     spawnIntervalSeconds: 0.8,
     fallSeconds: 2.8,
-    spawnPool: ['strawberry', 'cookie', 'tart', 'pineapple', 'grub', 'bug'],
+    spawnPool: ['cherry', 'cheese', 'strawberry', 'cookie', 'tart', 'pineapple', 'grub', 'bug'],
   },
   {
     scoreToAdvance: Number.POSITIVE_INFINITY,
     spawnIntervalSeconds: 0.65,
     fallSeconds: 2.4,
-    spawnPool: ['cookie', 'tart', 'pineapple', 'waffles', 'grub', 'bug', 'bug'],
+    spawnPool: ['cheese', 'strawberry', 'cookie', 'tart', 'pineapple', 'waffles', 'grub', 'bug'],
   },
 ];
