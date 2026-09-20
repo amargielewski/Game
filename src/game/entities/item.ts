@@ -1,7 +1,7 @@
 import { Sprite, type Texture } from 'pixi.js';
 import { Entity } from './entity';
 import { GAME_CONFIG } from '../../config/game-config';
-import { isHazard, type ItemDefinition } from '../../config/items';
+import type { ItemDefinition } from '../../config/items';
 
 export class Item extends Entity {
   private readonly spin: number = (Math.random() - 0.5) * GAME_CONFIG.items.maxSpin;
@@ -25,10 +25,6 @@ export class Item extends Entity {
     this.x += this.velocityX * deltaSeconds;
     this.y += this.velocityY * deltaSeconds;
     this.rotation += this.spin * deltaSeconds;
-  }
-
-  public get isHazard(): boolean {
-    return isHazard(this.definition);
   }
 
   public get hasFallenBelowScreen(): boolean {
