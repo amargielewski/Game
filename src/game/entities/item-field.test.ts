@@ -95,10 +95,10 @@ describe('ItemField missing', () => {
     expect(field.children).toHaveLength(0);
   });
 
-  it('clears a fallen hazard without charging a life', () => {
+  it('charges a life for a fallen hazard too', () => {
     const field = fieldWithOneItem('bug', PAST_THE_FLOOR_SECONDS);
 
-    expect(field.takeMissedCount()).toBe(0);
+    expect(field.takeMissedCount()).toBe(1);
     expect(field.children).toHaveLength(0);
   });
 
