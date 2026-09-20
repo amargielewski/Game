@@ -42,20 +42,32 @@ export class Background extends Container {
 
   private createGround(): Graphics {
     const ground = new Graphics();
-    const { groundY, designWidth, designHeight } = GAME_CONFIG.arena;
-    const { dirtColor, grassShadowColor, grassShadowHeight, grassColor, grassHeight } =
-      GAME_CONFIG.background;
 
-    ground.beginFill(dirtColor);
-    ground.drawRect(0, groundY, designWidth, designHeight - groundY);
+    ground.beginFill(GAME_CONFIG.background.dirtColor);
+    ground.drawRect(
+      0,
+      GAME_CONFIG.arena.groundY,
+      GAME_CONFIG.arena.designWidth,
+      GAME_CONFIG.arena.designHeight - GAME_CONFIG.arena.groundY,
+    );
     ground.endFill();
 
-    ground.beginFill(grassShadowColor);
-    ground.drawRect(0, groundY, designWidth, grassShadowHeight);
+    ground.beginFill(GAME_CONFIG.background.grassShadowColor);
+    ground.drawRect(
+      0,
+      GAME_CONFIG.arena.groundY,
+      GAME_CONFIG.arena.designWidth,
+      GAME_CONFIG.background.grassShadowHeight,
+    );
     ground.endFill();
 
-    ground.beginFill(grassColor);
-    ground.drawRect(0, groundY, designWidth, grassHeight);
+    ground.beginFill(GAME_CONFIG.background.grassColor);
+    ground.drawRect(
+      0,
+      GAME_CONFIG.arena.groundY,
+      GAME_CONFIG.arena.designWidth,
+      GAME_CONFIG.background.grassHeight,
+    );
     ground.endFill();
 
     return ground;

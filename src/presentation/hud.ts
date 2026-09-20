@@ -16,16 +16,14 @@ export class Hud extends Container {
   ) {
     super();
 
-    const { scorePosition, heartsPosition, bannerOffsetY } = GAME_CONFIG.hud;
-
-    this.scoreLabel.position.set(scorePosition.x, scorePosition.y);
-    this.hearts.position.set(heartsPosition.x, heartsPosition.y);
+    this.scoreLabel.position.set(GAME_CONFIG.hud.scorePosition.x, GAME_CONFIG.hud.scorePosition.y);
+    this.hearts.position.set(GAME_CONFIG.hud.heartsPosition.x, GAME_CONFIG.hud.heartsPosition.y);
     this.drawHearts(GAME_CONFIG.scoring.startingLives);
 
     this.banner.anchor.set(0.5);
     this.banner.position.set(
       GAME_CONFIG.arena.designWidth / 2,
-      GAME_CONFIG.arena.designHeight / 2 + bannerOffsetY,
+      GAME_CONFIG.arena.designHeight / 2 + GAME_CONFIG.hud.bannerOffsetY,
     );
     this.banner.alpha = 0;
 

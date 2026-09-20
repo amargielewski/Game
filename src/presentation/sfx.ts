@@ -19,8 +19,8 @@ export class Sfx {
     private readonly settings: SettingsStore,
     gameEvents: GameEvents,
   ) {
-    gameEvents.on('itemCaught', ({ points }) => {
-      this.playTone(points >= 0 ? GAME_CONFIG.audio.catchTone : GAME_CONFIG.audio.penaltyTone);
+    gameEvents.on('itemCaught', (item) => {
+      this.playTone(item.points >= 0 ? GAME_CONFIG.audio.catchTone : GAME_CONFIG.audio.penaltyTone);
     });
 
     gameEvents.on('itemMissed', () => {

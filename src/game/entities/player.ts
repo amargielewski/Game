@@ -71,9 +71,9 @@ export class Player extends Entity {
   }
 
   private get currentSpeed(): number {
-    const { speed, airControlFactor } = GAME_CONFIG.player;
-
-    return this.jump.isAirborne ? speed * airControlFactor : speed;
+    return this.jump.isAirborne
+      ? GAME_CONFIG.player.speed * GAME_CONFIG.player.airControlFactor
+      : GAME_CONFIG.player.speed;
   }
 
   private updatePose(direction: number): void {

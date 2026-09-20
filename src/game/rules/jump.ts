@@ -36,11 +36,9 @@ export class Jump {
       return;
     }
 
-    const { gravity } = this;
-
     this.currentHeight +=
-      this.verticalSpeed * deltaSeconds - 0.5 * gravity * deltaSeconds * deltaSeconds;
-    this.verticalSpeed -= gravity * deltaSeconds;
+      this.verticalSpeed * deltaSeconds - 0.5 * this.gravity * deltaSeconds * deltaSeconds;
+    this.verticalSpeed -= this.gravity * deltaSeconds;
 
     if (this.currentHeight <= 0) {
       this.currentHeight = 0;
