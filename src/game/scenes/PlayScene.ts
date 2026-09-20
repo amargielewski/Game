@@ -5,7 +5,7 @@ import { ScoreBoard } from '../rules/ScoreBoard';
 import { LevelProgression } from '../rules/LevelProgression';
 import { GAME_CONFIG } from '../../config/GameConfig';
 import { LEVELS, type LevelDefinition } from '../../config/levels';
-import { gameEvents } from '../events';
+import type { GameEvents } from '../events';
 import type { Artwork } from '../Artwork';
 import type { InputManager } from '../../core/InputManager';
 
@@ -16,7 +16,11 @@ export class PlayScene extends Container {
   private readonly player: Player;
   private finished: boolean = false;
 
-  constructor(artwork: Artwork, input: InputManager) {
+  constructor(
+    artwork: Artwork,
+    input: InputManager,
+    private readonly gameEvents: GameEvents,
+  ) {
     super();
 
     this.itemField = new ItemField(artwork, this.progression.current);
@@ -37,9 +41,9 @@ export class PlayScene extends Container {
   }
 
   public start(): void {
-    gameEvents.emit('scoreChanged', this.scoreBoard.points);
-    gameEvents.emit('livesChanged', this.scoreBoard.lives);
-    gameEvents.emit('levelChanged', this.progression.levelNumber);
+    this.gameEvents.emit('scoreChanged', this.scoreBoard.points);
+    this.gameEvents.emit('livesChanged', this.scoreBoard.lives);
+    this.gameEvents.emit('levelChanged', this.progression.levelNumber);
   }
 
   public update(deltaSeconds: number): void {
@@ -63,10 +67,10 @@ export class PlayScene extends Container {
 
     for (const item of caught) {
       this.scoreBoard.addPoints(item.points);
-      gameEvents.emit('itemCaught', item);
+      this.gameEvents.emit('itemCaught', item);
     }
 
-    gameEvents.emit('scoreChanged', this.scoreBoard.points);
+    this.gameEvents.emit('scoreChanged', this.scoreBoard.points);
   }
 
   private punishMissedItems(): void {
@@ -77,8 +81,8 @@ export class PlayScene extends Container {
     }
 
     this.scoreBoard.loseLives(missedCount);
-    gameEvents.emit('itemMissed');
-    gameEvents.emit('livesChanged', this.scoreBoard.lives);
+    this.gameEvents.emit('itemMissed');
+    this.gameEvents.emit('livesChanged', this.scoreBoard.lives);
 
     if (this.scoreBoard.isGameOver) {
       this.finish();
@@ -91,11 +95,11 @@ export class PlayScene extends Container {
     }
 
     this.itemField.applyLevel(this.progression.current);
-    gameEvents.emit('levelChanged', this.progression.levelNumber);
+    this.gameEvents.emit('levelChanged', this.progression.levelNumber);
   }
 
   private finish(): void {
     this.finished = true;
-    gameEvents.emit('gameOver', this.scoreBoard.points);
+    this.gameEvents.emit('gameOver', this.scoreBoard.points);
   }
 }

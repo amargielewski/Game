@@ -1,6 +1,6 @@
 import { Container, Sprite, type Texture } from 'pixi.js';
 import { GAME_CONFIG } from '../config/GameConfig';
-import { gameEvents } from '../game/events';
+import type { GameEvents } from '../game/events';
 
 interface Particle {
   readonly sprite: Sprite;
@@ -12,7 +12,10 @@ interface Particle {
 export class ParticleBurst extends Container {
   private readonly particles: Particle[] = [];
 
-  constructor(private readonly texture: Texture) {
+  constructor(
+    private readonly texture: Texture,
+    gameEvents: GameEvents,
+  ) {
     super();
 
     gameEvents.on('itemCaught', ({ x, y, color }) => {

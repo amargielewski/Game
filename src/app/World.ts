@@ -1,6 +1,7 @@
 import { Container } from 'pixi.js';
 import { AppFlow } from './AppFlow';
 import type { Artwork } from '../game/Artwork';
+import { GameEvents } from '../game/events';
 import { GAME_CONFIG } from '../config/GameConfig';
 import type { InputManager } from '../core/InputManager';
 import { Background } from '../presentation/Background';
@@ -13,13 +14,14 @@ import { HighScoreStore } from '../storage/HighScoreStore';
 export class World {
   private readonly background: Background = new Background();
   private readonly gameLayer: Container = new Container();
+  private readonly gameEvents: GameEvents = new GameEvents();
   private readonly particles: ParticleBurst;
   private readonly hud: Hud;
   private readonly appFlow: AppFlow;
 
   constructor(root: Container, artwork: Artwork, input: InputManager, settings: SettingsStore) {
-    this.particles = new ParticleBurst(artwork.sparkTexture);
-    this.hud = new Hud(artwork.fullHeartTexture, artwork.emptyHeartTexture);
+    this.particles = new ParticleBurst(artwork.sparkTexture, this.gameEvents);
+    this.hud = new Hud(artwork.fullHeartTexture, artwork.emptyHeartTexture, this.gameEvents);
     this.hud.visible = false;
 
     root.addChild(this.background, this.gameLayer, this.particles, this.hud);
@@ -29,9 +31,10 @@ export class World {
       artwork,
       input,
       this.hud,
-      new Sfx(settings),
+      new Sfx(settings, this.gameEvents),
       settings,
       new HighScoreStore(),
+      this.gameEvents,
     );
   }
 

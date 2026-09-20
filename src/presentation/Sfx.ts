@@ -1,5 +1,5 @@
 import { GAME_CONFIG } from '../config/GameConfig';
-import { gameEvents } from '../game/events';
+import type { GameEvents } from '../game/events';
 import type { SettingsStore } from '../storage/SettingsStore';
 
 const EXPONENTIAL_RAMP_FLOOR = 0.0001;
@@ -15,7 +15,10 @@ interface Tone {
 export class Sfx {
   private audioContext: AudioContext | null = null;
 
-  constructor(private readonly settings: SettingsStore) {
+  constructor(
+    private readonly settings: SettingsStore,
+    gameEvents: GameEvents,
+  ) {
     gameEvents.on('itemCaught', ({ points }) => {
       this.playTone(points >= 0 ? GAME_CONFIG.audio.catchTone : GAME_CONFIG.audio.penaltyTone);
     });

@@ -89,7 +89,8 @@ Three consequences follow:
    depend on the frame rate.
 3. **The round is orchestrated explicitly** in `PlayScene.update`, while the HUD, particles,
    sound and ranking are subscribers to typed events — adding an effect does not touch game
-   logic.
+   logic. There is no global bus: `World` creates the one `GameEvents` emitter and hands it to
+   the scene and to every subscriber through the constructor.
 
 The UI layer is plain DOM: seven screens built on `<template>` and the `hidden` attribute,
 no framework. The interface is bilingual (`pl` / `en`), with the language detected from
