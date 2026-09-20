@@ -2,7 +2,7 @@ import { Overlay } from '../overlay';
 import type { HighScoreStore } from '../../storage/high-score-store';
 
 export class GameOverScreen {
-  public readonly overlay: Overlay = new Overlay('screen-gameover');
+  public readonly overlay: Overlay = new Overlay('screen-game-over');
   private readonly nameInput: HTMLInputElement = this.overlay.field('name');
   private lastScore: number = 0;
 
