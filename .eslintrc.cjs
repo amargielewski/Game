@@ -52,11 +52,6 @@ module.exports = {
       },
       {
         selector: 'variable',
-        modifiers: ['const', 'global', 'destructured'],
-        format: ['camelCase'],
-      },
-      {
-        selector: 'variable',
         modifiers: ['const', 'global'],
         types: ['boolean'],
         format: ['UPPER_CASE'],
