@@ -15,14 +15,23 @@ type PointerListener = (event: FakePointerEvent) => void;
 const startInput = (): {
   input: InputManager;
   fire: (type: string, event: FakePointerEvent) => void;
+  hideTab: () => void;
 } => {
   const listeners = new Map<string, PointerListener>();
+  const documentListeners = new Map<string, () => void>();
+  const fakeDocument = {
+    hidden: false,
+    addEventListener: (type: string, listener: () => void): void => {
+      documentListeners.set(type, listener);
+    },
+  };
 
   vi.stubGlobal('window', {
     innerWidth: WINDOW_WIDTH,
     innerHeight: WINDOW_HEIGHT,
     addEventListener: (): void => undefined,
   });
+  vi.stubGlobal('document', fakeDocument);
 
   const canvas = {
     addEventListener: (type: string, listener: PointerListener): void => {
@@ -37,6 +46,10 @@ const startInput = (): {
     input,
     fire: (type, event): void => {
       listeners.get(type)?.(event);
+    },
+    hideTab: (): void => {
+      fakeDocument.hidden = true;
+      documentListeners.get('visibilitychange')?.();
     },
   };
 };
@@ -85,5 +98,25 @@ describe('pointer steering', () => {
     fire('pointermove', { pointerId: 7, clientX: 0, clientY: WINDOW_HEIGHT * 0.8 });
 
     expect(input.horizontalAxis).toBe(1);
+  });
+});
+
+describe('leaving the tab', () => {
+  it('asks for a pause when the tab is hidden during a round', () => {
+    const { input, hideTab } = startInput();
+
+    input.setGameplayActive(true);
+    hideTab();
+
+    expect(input.consumePauseRequest()).toBe(true);
+  });
+
+  it('asks for nothing outside a round, so a paused game stays paused', () => {
+    const { input, hideTab } = startInput();
+
+    input.setGameplayActive(false);
+    hideTab();
+
+    expect(input.consumePauseRequest()).toBe(false);
   });
 });

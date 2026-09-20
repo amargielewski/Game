@@ -40,8 +40,9 @@ settings: **Settings → Pages → Source: GitHub Actions**.
 | Jump   | **space**, **↑** or **W** (60% air control) | tap the top 30% of the screen                  |
 | Pause  | **Esc** or **P**                            | the button in the bottom-left corner           |
 
-Pausing lets you resume or leave for the menu without losing lives. Game keys are only
-captured while a round is running, so the menus stay navigable from the keyboard.
+Pausing lets you resume or leave for the menu without losing lives, and a round pauses by
+itself when its tab is hidden. Game keys are only captured while a round is running, so the
+menus stay navigable from the keyboard.
 
 ## Gameplay
 
