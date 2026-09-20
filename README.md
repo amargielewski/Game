@@ -32,9 +32,11 @@ settings: **Settings → Pages → Source: GitHub Actions**.
 
 ## Controls
 
-**← →** or **A / D** — move · **space**, **↑** or **W** — jump (60% control in the air)
-· **Esc** or **P** — pause · **touch** — the bottom 70% of the screen moves, the top 30%
-jumps, and the button in the bottom-left corner pauses
+| Action | Keyboard                                    | Touch                                          |
+| ------ | ------------------------------------------- | ---------------------------------------------- |
+| Move   | **← →** or **A / D**                        | hold the left or right half, below the top 30% |
+| Jump   | **space**, **↑** or **W** (60% air control) | tap the top 30% of the screen                  |
+| Pause  | **Esc** or **P**                            | the button in the bottom-left corner           |
 
 Pausing lets you resume or leave for the menu without losing lives. Game keys are only
 captured while a round is running, so the menus stay navigable from the keyboard.
@@ -44,12 +46,12 @@ captured while a round is running, so the menus stay navigable from the keyboard
 - ten lives, one lost for every missed item
 - five levels: each one shortens the fall time and the gap between spawns, and adds new food
 - twelve kinds of food, worth more as they get rarer (apple 1 → honeycomb 8)
-- **the grub and the bug subtract points** — do not catch them. A missed grub costs no life,
-  because dodging it is the goal rather than a mistake
+- **the grub and the bug subtract points**, so do not catch them. A missed grub costs no
+  life, because dodging it is the goal rather than a mistake
 - the **How to play** screen lists every kind with its value; it opens by itself on a first
   visit and stays reachable from the menu afterwards
 - every dozen seconds or so a honeycomb crosses the screen at a height you cannot reach from
-  the ground — you have to jump for it
+  the ground, so you have to jump for it
 - the top-ten ranking and the sound settings persist in `localStorage`
 
 ## Screens
@@ -80,7 +82,7 @@ the wrong way fails `npm run lint`.
 
 Three consequences follow:
 
-1. **Game rules reach neither the graphics nor the config** — they take their values through
+1. **Game rules reach neither the graphics nor the config.** They take their values through
    the constructor. That is why scoring, level progression, collisions, jump physics and the
    "what costs a life" rule are tested without mocks and without a canvas.
 2. **Balance is expressed in time, not in pixels.** A level declares `fallSeconds`, the
@@ -88,7 +90,7 @@ Three consequences follow:
    world unit. Difficulty is identical horizontally and vertically, and movement does not
    depend on the frame rate.
 3. **The round is orchestrated explicitly** in `PlayScene.update`, while the HUD, particles,
-   sound and ranking are subscribers to typed events — adding an effect does not touch game
+   sound and ranking are subscribers to typed events, so adding an effect does not touch game
    logic. There is no global bus: `World` creates the one `GameEvents` emitter and hands it to
    the scene and to every subscriber through the constructor.
 
@@ -110,7 +112,7 @@ browser settings and switchable in Settings, together with everything generated 
 | Another language | `config/locales.ts` + `presentation/strings.ts`                                                |
 
 Not one row requires going into `game/rules/`. Sprites are indexed with `import.meta.glob`,
-so new artwork needs no import — only a file name matching its kind (`Cheese.png` →
+so new artwork needs no import, only a file name matching its kind (`Cheese.png` →
 `cheese`).
 
 ### Known limitations
@@ -118,17 +120,17 @@ so new artwork needs no import — only a file name matching its kind (`Cheese.p
 - Orientation (portrait / landscape) is picked once, at startup. The game scales to any
   window size, but after rotating a phone you need to reload to get a layout matched to the
   new orientation.
-- The ranking and the settings live in one browser's `localStorage` — there is no sync
+- The ranking and the settings live in one browser's `localStorage`, with no sync
   between devices.
 
 ## Credits
 
-- Character: [4 Directional Character](https://lionheart963.itch.io/4-directional-character) —
-  lionheart963. The `idle` and `run left/right` frames (84×84) are used, in `src/assets/knight/`.
-- Food: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) — Henry Software
+- Character: [4 Directional Character](https://lionheart963.itch.io/4-directional-character)
+  by lionheart963. The `idle` and `run left/right` frames (84×84) are used, in `src/assets/knight/`.
+- Food: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) by Henry Software
   (artwork: benmhenry@gmail.com). Twelve 16×16 sprites, in `src/assets/food/`. The apple
   also becomes `public/favicon.ico`, scaled with nearest-neighbour to 16, 32 and 64 px.
 - Font: Press Start 2P (Google Fonts, SIL OFL), falling back to the system monospace.
 
-The background, clouds, hearts and particles are drawn procedurally in code — they do not
+The background, clouds, hearts and particles are drawn procedurally in code and do not
 come from either pack.
