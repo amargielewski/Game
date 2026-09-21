@@ -2,23 +2,19 @@
 
 ![Gameplay](docs/gameplay.png)
 
-An 8-bit catch-the-falling-things game. A starving knight runs along the bottom of the
-screen collecting food that drops from above. Every catch scores, every miss costs a life,
-and the game ends after ten lives are gone.
+An 8-bit catch-the-falling-food game. A starving knight runs along the ground catching food:
+every catch scores, every miss costs a life, and the game ends after ten lives are gone.
 
 **[Play it in the browser](https://amargielewski.github.io/Game/)**
 
 ## Running it
 
-The project is pinned to the versions from the task description: **Node 16.16.0 LTS /
-npm 8.11.0**.
+Pinned to the task's versions, **Node 16.16.0 LTS / npm 8.11.0**. The lockfile is
+`lockfileVersion: 2`, so newer npm installs it too.
 
 ```bash
 nvm use && npm install && npm start
 ```
-
-`npm start` opens the game in a browser. `package-lock.json` was produced by npm 8.11.0
-(`lockfileVersion: 2`), so installing on newer npm works too.
 
 | Command             | What it does                   |
 | ------------------- | ------------------------------ |
@@ -28,78 +24,60 @@ nvm use && npm install && npm start
 | `npm run typecheck` | `tsc --noEmit`                 |
 | `npm test`          | unit tests (vitest)            |
 
-Every push runs the same steps in GitHub Actions, and a build of `main` is published to
-GitHub Pages (`.github/workflows/`). Publishing is enabled once, in the repository
-settings: **Settings → Pages → Source: GitHub Actions**.
+GitHub Actions runs these on every push and publishes `main` to GitHub Pages. Enable it
+once under **Settings → Pages → Source: GitHub Actions**.
 
 ## Controls
 
 | Action | Keyboard                                    | Touch                                          |
 | ------ | ------------------------------------------- | ---------------------------------------------- |
 | Move   | **← →** or **A / D**                        | hold the left or right half, below the top 30% |
-| Jump   | **space**, **↑** or **W** (60% air control) | tap the top 30% of the screen                  |
-| Pause  | **Esc** or **P**                            | the button in the bottom-left corner           |
+| Jump   | **space**, **↑** or **W** (60% air control) | tap the top 30%                                |
+| Pause  | **Esc** or **P**                            | the bottom-left button                         |
 
-Pausing lets you resume or leave for the menu without losing lives, and a round pauses by
-itself when its tab is hidden. Game keys are only captured while a round is running, so the
-menus stay navigable from the keyboard.
+Pausing costs no lives, and a round pauses itself when its tab is hidden. Game keys are
+captured only during a round, so the menus stay keyboard-navigable.
 
 ## Gameplay
 
-- ten lives, one lost for every missed item
-- five levels: each one shortens the fall time and the gap between spawns, and adds new food
-- twelve kinds of food, worth more as they get rarer (apple 1 → honeycomb 8)
-- **the grub and the bug subtract points** when caught, and cost a life like anything else
-  when they reach the ground, so each one is a choice between points and a life
-- the **How to play** screen lists every kind with its value; it opens by itself on a first
-  visit and stays reachable from the menu afterwards
-- every dozen seconds or so a honeycomb crosses the screen at a height you cannot reach from
-  the ground, so you have to jump for it
+- ten lives, one lost per missed item
+- five levels, each with faster falls, shorter spawn gaps and new food
+- twelve kinds of food, rarer is worth more (apple 1 → honeycomb 8)
+- **the grub and the bug subtract points** when caught but still cost a life when missed,
+  so each one is a choice between points and a life
+- every dozen seconds or so a honeycomb flies past out of reach from the ground: jump for it
+- **How to play** lists every food with its value; it opens on the first visit, then stays
+  in the menu
 - the top-ten ranking and the sound settings persist in `localStorage`
-
-## Screens
-
-|              Menu              |             How to play              |             Ranking              |
-| :----------------------------: | :----------------------------------: | :------------------------------: |
-|     ![Menu](docs/menu.png)     | ![How to play](docs/how-to-play.png) |   ![Ranking](docs/ranking.png)   |
-|          **Settings**          |              **Paused**              |          **Game over**           |
-| ![Settings](docs/settings.png) |      ![Paused](docs/pause.png)       | ![Game over](docs/game-over.png) |
 
 ## Architecture
 
-Dependencies point one way, and the boundary is held by ESLint rather than by good
-intentions:
+Dependencies point one way. Each arrow is an `overrides` entry in `.eslintrc.cjs`, so a
+wrong-way import fails `npm run lint`.
 
 ```
 config/        ──►  (nothing)          the single source of values
-game/rules/    ──►  (nothing)          plain TypeScript, ZERO pixi, ZERO config
+game/rules/    ──►  (nothing)          plain TypeScript, no pixi, no config
 storage/       ──►  zod, config        the only place untrusted input is parsed
 core/          ──►  pixi.js, config    input and scaling, knows nothing about the game
 game/          ──►  core, rules, config
-presentation/  ──►  events, DOM        listens only, never decides
+presentation/  ──►  events, DOM        listens, never decides
 app/           ──►  everything above   the only layer that wires it all together
 ```
 
-Each of those arrows is a separate `overrides` entry in `.eslintrc.cjs`. An import pointing
-the wrong way fails `npm run lint`.
-
-Three consequences follow:
-
-1. **Game rules reach neither the graphics nor the config.** They take their values through
-   the constructor. That is why scoring, level progression, collisions, jump physics and the
-   "what costs a life" rule are tested without mocks and without a canvas.
-2. **Balance is expressed in time, not in pixels.** A level declares `fallSeconds`, the
-   player `PLAYER_CROSSING_SECONDS`, the jump `JUMP_APEX_RATIO`, all derived from one shared
-   world unit. Difficulty is identical horizontally and vertically, and movement does not
-   depend on the frame rate.
-3. **The round is orchestrated explicitly** in `PlayScene.update`, while the HUD, particles,
-   sound and ranking are subscribers to typed events, so adding an effect does not touch game
-   logic. There is no global bus: `World` creates the one `GameEvents` emitter and hands it to
-   the scene and to every subscriber through the constructor.
-
-The UI layer is plain DOM: seven screens built on `<template>` and the `hidden` attribute,
-no framework. The interface is bilingual (`pl` / `en`), with the language detected from
-browser settings and switchable in Settings, together with everything generated at runtime.
+- **Rules are pure.** They get their values through the constructor, so scoring, levels,
+  collisions, jump physics and the "what costs a life" rule are tested without mocks or a
+  canvas.
+- **Balance is in time, not pixels.** `fallSeconds`, `PLAYER_CROSSING_SECONDS` and
+  `JUMP_APEX_RATIO` share one world unit: difficulty is the same on both axes and movement
+  does not depend on the frame rate.
+- **The round is orchestrated explicitly** in `PlayScene.update`. The HUD, particles, sound
+  and ranking subscribe to typed events, so a new effect never touches game logic. There is
+  no global bus: `World` creates the one `GameEvents` emitter and passes it through
+  constructors.
+- **The UI is plain DOM**: seven screens on `<template>` and `hidden`, no framework. It is
+  bilingual (`pl` / `en`), detected from the browser and switchable in Settings, runtime
+  text included.
 
 ### Extending it
 
@@ -114,25 +92,22 @@ browser settings and switchable in Settings, together with everything generated 
 | Balance tweaks   | `config/game-config.ts`                                                                        |
 | Another language | `config/locales.ts` + `presentation/strings.ts`                                                |
 
-Not one row requires going into `game/rules/`. Sprites are indexed with `import.meta.glob`,
-so new artwork needs no import, only a file named after its kind (`cheese.png`).
+None of them touch `game/rules/`. Sprites load through `import.meta.glob`, so new artwork
+is just a file named after its kind (`cheese.png`).
 
 ### Known limitations
 
-- Orientation (portrait / landscape) is picked once, at startup. The game scales to any
-  window size, but after rotating a phone you need to reload to get a layout matched to the
-  new orientation.
-- The ranking and the settings live in one browser's `localStorage`, with no sync
-  between devices.
+- Orientation is picked once, at startup. The game scales to any window, but after rotating
+  a phone you need to reload for a matching layout.
+- The ranking and settings live in one browser's `localStorage`, with no cross-device sync.
 
 ## Credits
 
 - Character: [4 Directional Character](https://lionheart963.itch.io/4-directional-character)
-  by lionheart963. The `idle` and `run left/right` frames (84×84) are used, in `src/assets/knight/`.
+  by lionheart963: the `idle` and `run left/right` frames (84×84), in `src/assets/knight/`.
 - Food: [Free Pixel Food](https://henrysoftware.itch.io/pixel-food) by Henry Software
-  (artwork: benmhenry@gmail.com). Twelve 16×16 sprites, in `src/assets/food/`. The apple
-  also becomes `public/favicon.ico`, scaled with nearest-neighbour to 16, 32 and 64 px.
+  (artwork: benmhenry@gmail.com): twelve 16×16 sprites, in `src/assets/food/`. The apple is
+  also `public/favicon.ico`, scaled nearest-neighbour to 16, 32 and 64 px.
 - Font: Press Start 2P (Google Fonts, SIL OFL), falling back to the system monospace.
 
-The background, clouds, hearts and particles are drawn procedurally in code and do not
-come from either pack.
+The background, clouds, hearts and particles are drawn procedurally in code.
