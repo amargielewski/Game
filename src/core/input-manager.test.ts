@@ -60,28 +60,69 @@ const holdRightSide = (pointerId: number): FakePointerEvent => ({
   clientY: WINDOW_HEIGHT * 0.8,
 });
 
-const tapJumpArea = (pointerId: number): FakePointerEvent => ({
-  pointerId,
-  clientX: WINDOW_WIDTH * 0.5,
-  clientY: WINDOW_HEIGHT * 0.1,
+const holdLeftSide = (pointerId: number): FakePointerEvent => ({
+  ...holdRightSide(pointerId),
+  clientX: WINDOW_WIDTH * 0.1,
+});
+
+const raisedBy = (event: FakePointerEvent, pixels: number): FakePointerEvent => ({
+  ...event,
+  clientY: event.clientY - pixels,
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('pointer steering', () => {
-  it('keeps moving while a second finger taps for a jump', () => {
+describe('touch jumping', () => {
+  it('jumps on a tap from a second finger and keeps steering with the first', () => {
     const harness = startInput();
 
     harness.fire('pointerdown', holdRightSide(1));
-    harness.fire('pointerdown', tapJumpArea(2));
-    harness.fire('pointerup', tapJumpArea(2));
+    harness.fire('pointerdown', holdLeftSide(2));
+    harness.fire('pointerup', holdLeftSide(2));
 
     expect(harness.input.consumeJumpRequest()).toBe(true);
     expect(harness.input.horizontalAxis).toBe(1);
   });
 
+  it('jumps when the steering finger swipes up', () => {
+    const harness = startInput();
+
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointermove', raisedBy(holdRightSide(1), 40));
+
+    expect(harness.input.consumeJumpRequest()).toBe(true);
+    expect(harness.input.horizontalAxis).toBe(1);
+  });
+
+  it('ignores a small wobble of the steering finger', () => {
+    const harness = startInput();
+
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointermove', raisedBy(holdRightSide(1), 10));
+
+    expect(harness.input.consumeJumpRequest()).toBe(false);
+  });
+
+  it('asks for one jump per swipe and another after sliding back down', () => {
+    const harness = startInput();
+
+    harness.fire('pointerdown', holdRightSide(1));
+    harness.fire('pointermove', raisedBy(holdRightSide(1), 40));
+    harness.input.consumeJumpRequest();
+    harness.fire('pointermove', raisedBy(holdRightSide(1), 50));
+
+    expect(harness.input.consumeJumpRequest()).toBe(false);
+
+    harness.fire('pointermove', holdRightSide(1));
+    harness.fire('pointermove', raisedBy(holdRightSide(1), 40));
+
+    expect(harness.input.consumeJumpRequest()).toBe(true);
+  });
+});
+
+describe('pointer steering', () => {
   it('stops when the steering finger is lifted', () => {
     const harness = startInput();
 

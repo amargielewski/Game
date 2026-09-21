@@ -1,6 +1,7 @@
 export interface DepartedItem {
   readonly hasFallenBelowScreen: boolean;
   readonly hasDriftedOffScreen: boolean;
+  readonly isHazard: boolean;
 }
 
 export function hasLeftTheArena(item: DepartedItem): boolean {
@@ -8,5 +9,5 @@ export function hasLeftTheArena(item: DepartedItem): boolean {
 }
 
 export function costsALife(item: DepartedItem): boolean {
-  return item.hasFallenBelowScreen;
+  return item.hasFallenBelowScreen && !item.isHazard;
 }

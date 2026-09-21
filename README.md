@@ -2,8 +2,8 @@
 
 ![Gameplay](docs/gameplay.png)
 
-An 8-bit catch-the-falling-food game. A starving knight runs along the ground catching food:
-every catch scores, every miss costs a life, and the game ends after ten lives are gone.
+An 8-bit catch-the-falling-food game. A starving knight runs along the ground catching food and
+dodging bugs: every missed food costs a life, and the game ends after ten lives are gone.
 
 **[Play it in the browser](https://amargielewski.github.io/Game/)**
 
@@ -29,22 +29,22 @@ once under **Settings → Pages → Source: GitHub Actions**.
 
 ## Controls
 
-| Action | Keyboard                                    | Touch                                          |
-| ------ | ------------------------------------------- | ---------------------------------------------- |
-| Move   | **← →** or **A / D**                        | hold the left or right half, below the top 30% |
-| Jump   | **space**, **↑** or **W** (60% air control) | tap the top 30%                                |
-| Pause  | **Esc** or **P**                            | the bottom-left button                         |
+| Action | Keyboard                                    | Touch                                                  |
+| ------ | ------------------------------------------- | ------------------------------------------------------ |
+| Move   | **← →** or **A / D**                        | hold anywhere on the left or right half                |
+| Jump   | **space**, **↑** or **W** (60% air control) | swipe the steering finger up, or tap with a second one |
+| Pause  | **Esc** or **P**                            | the bottom-left button                                 |
 
 Pausing costs no lives, and a round pauses itself when its tab is hidden. Game keys are
 captured only during a round, so the menus stay keyboard-navigable.
 
 ## Gameplay
 
-- ten lives, one lost per missed item
+- ten lives, one lost per missed food
 - five levels, each with faster falls, shorter spawn gaps and new food
 - twelve kinds of food, rarer is worth more (apple 1 → honeycomb 8)
-- **the grub and the bug subtract points** when caught but still cost a life when missed,
-  so each one is a choice between points and a life
+- **the grub and the bug subtract points** when caught, and letting them fall costs no life:
+  dodge them
 - every dozen seconds or so a honeycomb flies past out of reach from the ground: jump for it
 - **How to play** lists every food with its value; it opens on the first visit, then stays
   in the menu

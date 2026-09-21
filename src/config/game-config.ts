@@ -71,7 +71,7 @@ export const GAME_CONFIG = {
     rightKeys: ['ArrowRight', 'KeyD'],
     jumpKeys: ['Space', 'ArrowUp', 'KeyW'],
     pauseKeys: ['Escape', 'KeyP'],
-    jumpTouchAreaRatio: 0.3,
+    jumpSwipePixels: 32,
   },
   hud: {
     labelStyle: HUD_LABEL_STYLE,

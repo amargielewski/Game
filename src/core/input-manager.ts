@@ -4,6 +4,7 @@ export class InputManager {
   private readonly pressedKeys: Set<string> = new Set();
   private pointerAxis: number = 0;
   private movePointerId: number | null = null;
+  private swipeAnchorY: number = 0;
   private isJumpRequested: boolean = false;
   private isPauseRequested: boolean = false;
   private isGameplayActive: boolean = false;
@@ -34,13 +35,14 @@ export class InputManager {
   };
 
   private readonly handlePointerDown = (event: PointerEvent): void => {
-    if (event.clientY < window.innerHeight * GAME_CONFIG.input.jumpTouchAreaRatio) {
+    if (this.movePointerId !== null) {
       this.isJumpRequested = true;
 
       return;
     }
 
     this.movePointerId = event.pointerId;
+    this.swipeAnchorY = event.clientY;
     this.pointerAxis = this.axisForPointer(event);
   };
 
@@ -50,6 +52,12 @@ export class InputManager {
     }
 
     this.pointerAxis = this.axisForPointer(event);
+    this.swipeAnchorY = Math.max(this.swipeAnchorY, event.clientY);
+
+    if (this.swipeAnchorY - event.clientY >= GAME_CONFIG.input.jumpSwipePixels) {
+      this.isJumpRequested = true;
+      this.swipeAnchorY = event.clientY;
+    }
   };
 
   private readonly handlePointerRelease = (event: PointerEvent): void => {
