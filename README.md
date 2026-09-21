@@ -9,7 +9,7 @@ dodging bugs: every missed food costs a life, and the game ends after ten lives 
 
 ## Running it
 
-Pinned to the task's versions, **Node 16.16.0 LTS / npm 8.11.0**. The lockfile is
+Pinned to **Node 16.16.0 LTS / npm 8.11.0** (`.nvmrc`, `engines`). The lockfile is
 `lockfileVersion: 2`, so newer npm installs it too.
 
 ```bash
