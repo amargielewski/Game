@@ -13,7 +13,8 @@ const TRANSLATIONS = {
     guideBad: 'Omijaj — zabierają punkty:',
     guideBonus: 'Plaster miodu przelatuje w poprzek — wyskocz po niego.',
     guideMiss: 'Każde przegapione jedzenie kosztuje życie. Robaki możesz spokojnie przepuścić.',
-    controls: 'Ruch: ← → lub A/D · Skok: spacja · Dotyk: dół rusza, góra skacze',
+    controls:
+      'Ruch: ← → lub A/D · Skok: spacja · Dotyk: trzymaj lewą lub prawą stronę, skacz przesuwając palec w górę albo stukając drugim palcem',
     back: 'Wróć',
     backToMenu: 'Menu',
     language: 'Język',
@@ -43,7 +44,8 @@ const TRANSLATIONS = {
     guideBad: 'Avoid these — they cost points:',
     guideBonus: 'The honeycomb flies across — jump for it.',
     guideMiss: 'Every missed food costs a life. Letting a bug fall costs nothing.',
-    controls: 'Move: ← → or A/D · Jump: space · Touch: bottom moves, top jumps',
+    controls:
+      'Move: ← → or A/D · Jump: space · Touch: hold the left or right side, jump by swiping up or tapping with a second finger',
     back: 'Back',
     backToMenu: 'Menu',
     language: 'Language',
